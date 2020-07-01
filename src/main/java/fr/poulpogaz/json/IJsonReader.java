@@ -6,13 +6,13 @@ import java.math.BigInteger;
 
 public interface IJsonReader {
 
-    void beginObject() throws IOException, JsonException;
+    IJsonReader beginObject() throws IOException, JsonException;
 
-    void endObject() throws IOException, JsonException;
+    IJsonReader endObject() throws IOException, JsonException;
 
-    void beginArray() throws IOException, JsonException;
+    IJsonReader beginArray() throws IOException, JsonException;
 
-    void endArray() throws IOException, JsonException;
+    IJsonReader endArray() throws IOException, JsonException;
 
     String nextKey() throws IOException, JsonException;
 

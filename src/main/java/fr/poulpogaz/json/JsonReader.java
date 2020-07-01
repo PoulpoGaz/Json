@@ -43,36 +43,41 @@ public class JsonReader extends AbstractJsonReader {
             char c = peekNextChar();
 
             switch (c) {
-                case '{':
+                case '{' -> {
                     context = context.createObjectContext();
                     setCurrentToken(JsonToken.BEGIN_OBJECT_TOKEN);
                     pos++;
                     return;
-                case '}':
+                }
+                case '}' -> {
                     context = context.close();
                     setCurrentToken(JsonToken.END_OBJECT_TOKEN);
                     pos++;
                     return;
-                case '[':
+                }
+                case '[' -> {
                     context = context.createArrayContext();
                     setCurrentToken(JsonToken.BEGIN_ARRAY_TOKEN);
                     pos++;
                     return;
-                case ']':
+                }
+                case ']' -> {
                     context = context.close();
                     setCurrentToken(JsonToken.END_ARRAY_TOKEN);
                     pos++;
                     return;
-                case ',':
+                }
+                case ',' -> {
                     context.newComma();
                     pos++;
-                    break;
-                case ':':
+                }
+                case ':' -> {
                     context.newColon();
                     pos++;
-                    break;
-                case '"':
+                }
+                case '"' -> {
                     stringToken = parseString();
+
                     if (context.mayNeedKey()) {
                         context.newKey();
 
@@ -82,7 +87,8 @@ public class JsonReader extends AbstractJsonReader {
                         setCurrentToken(JsonToken.STRING_TOKEN);
                     }
                     return;
-                case 'n':
+                }
+                case 'n' -> {
                     context.newValue();
                     if (match("null")) { // null
                         setCurrentToken(JsonToken.NULL_TOKEN);
@@ -90,7 +96,8 @@ public class JsonReader extends AbstractJsonReader {
                     } else {
                         throw new JsonException("Syntax error");
                     }
-                case 't':
+                }
+                case 't' -> {
                     context.newValue();
                     if (match("true")) { // true
                         booleanToken = true;
@@ -100,7 +107,8 @@ public class JsonReader extends AbstractJsonReader {
                     } else {
                         throw new JsonException("Syntax error");
                     }
-                case 'f':
+                }
+                case 'f' -> {
                     context.newValue();
                     if (match("false")) { // false
                         booleanToken = false;
@@ -110,23 +118,14 @@ public class JsonReader extends AbstractJsonReader {
                     } else {
                         throw new JsonException("Syntax error");
                     }
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '-':
+                }
+                case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-' -> {
                     context.newValue();
                     numberToken = parseNumber();
                     setCurrentToken(toToken(numberToken));
                     return;
-                default:
-                    throw new IOException("Illegal character: " + c + " (bytes: " + (byte) c + ") at " + pos);
+                }
+                default -> throw new IOException("Illegal character: " + c + " (bytes: " + (byte) c + ") at " + pos);
             }
         }
     }
@@ -152,35 +151,15 @@ public class JsonReader extends AbstractJsonReader {
             char next = peekNextChar();
 
             switch (next) {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    context.newDigit(next);
-                    break;
-                case '-':
-                    context.newHyphen();
-                    break;
-                case '+':
-                    context.newPlus();
-                    break;
-                case 'e':
-                case 'E':
-                    context = context.newExponent();
-                    break;
-                case '.':
-                    context = context.newPoint();
-                    break;
-                default:
+                case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> context.newDigit(next);
+                case '-' -> context.newHyphen();
+                case '+' -> context.newPlus();
+                case 'e', 'E' -> context = context.newExponent();
+                case '.' -> context = context.newPoint();
+                default -> {
                     context.close();
                     context = null;
-                    break;
+                }
             }
 
             if (context != null) {
@@ -207,35 +186,16 @@ public class JsonReader extends AbstractJsonReader {
                 char next = nextChar();
 
                 switch (next) {
-                    case '\\':
-                        builder.append('\\');
-                        break;
-                    case '"':
-                        builder.append('"');
-                        break;
-                    case '/':
-                        builder.append('/');
-                        break;
-                    case 'b':
-                        builder.append('\b');
-                        break;
-                    case 'f':
-                        builder.append('\f');
-                        break;
-                    case 'n':
-                        builder.append('\n');
-                        break;
-                    case 'r':
-                        builder.append('\r');
-                        break;
-                    case 't':
-                        builder.append('\t');
-                        break;
-                    case 'u':
-                        builder.append(parseHex());
-                        break;
-                    default:
-                        throw new JsonException("Unknown escape character: " + next + " (bytes: " + (byte) +next + ")");
+                    case '\\' -> builder.append('\\');
+                    case '"' -> builder.append('"');
+                    case '/' -> builder.append('/');
+                    case 'b' -> builder.append('\b');
+                    case 'f' -> builder.append('\f');
+                    case 'n' -> builder.append('\n');
+                    case 'r' -> builder.append('\r');
+                    case 't' -> builder.append('\t');
+                    case 'u' -> builder.append(parseHex());
+                    default -> throw new JsonException("Unknown escape character: " + next + " (bytes: " + (byte) +next + ")");
                 }
             } else if (c == '"') {
                 break;
