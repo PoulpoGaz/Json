@@ -14,9 +14,12 @@ public enum JsonToken {
 
     INT_TOKEN(true, true),
     LONG_TOKEN(true, true),
-    FLOAT_TOKEN(true, true),
     BIG_INTEGER_TOKEN(true, true),
-    BIG_DECIMAL_TOKEN(true, true),
+    DECIMAL_TOKEN(true, true),
+    // no float or double token because
+    // it's very difficult to parse string
+    // to float/double and keep the precision
+    // and avoid NaN or Infinity values
 
     NULL_TOKEN(false, true),
     BOOLEAN_TOKEN(false, true),

@@ -3,14 +3,18 @@ package fr.poulpogaz.json;
 import com.sun.jdi.InternalException;
 import fr.poulpogaz.json.number.FirstDigitContext;
 import fr.poulpogaz.json.number.JsonNumberContext;
+import fr.poulpogaz.json.number.NumberHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class JsonReader extends AbstractJsonReader {
+
+    private static final char[] LONG = {'9', '2','2','3', '3','7','2', '0','3','6', '8','5','4', '7','7','5', '8','0','8'};;
 
     private static final int START = -2;
     private static final int EOF = -1;
@@ -145,30 +149,125 @@ public class JsonReader extends AbstractJsonReader {
     private Number parseNumber() throws JsonException, IOException {
         StringBuilder builder = new StringBuilder();
 
-        JsonNumberContext context = new FirstDigitContext();
+        NumberHelper helper = new NumberHelper();
 
-        while (context != null) {
+        while (!helper.isClosed()) {
             char next = peekNextChar();
 
             switch (next) {
-                case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> context.newDigit(next);
-                case '-' -> context.newHyphen();
-                case '+' -> context.newPlus();
-                case 'e', 'E' -> context = context.newExponent();
-                case '.' -> context = context.newPoint();
-                default -> {
-                    context.close();
-                    context = null;
-                }
+                case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> helper.newDigit(next);
+                case '-' -> helper.newHyphen();
+                case '+' -> helper.newPlus();
+                case 'e', 'E' -> helper.newExponent();
+                case '.' -> helper.newPoint();
+                default -> helper.close();
             }
 
-            if (context != null) {
+            if (!helper.isClosed()) {
                 nextChar(); // consume next char
                 builder.append(next);
             }
         }
 
-        return new BigDecimal(builder.toString());
+        String digit = helper.getDigitPart();
+
+        if (isInteger(helper)) { // integer number
+
+            int length = digit.length() + (helper.isNegativeExponent() ? -helper.getExponent() : helper.getExponent());
+
+            if (length < 10) { // int
+
+                if (helper.getExponent() != 0) {
+                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                }
+
+                return Integer.parseInt(builder.toString());
+
+            } else if (length == 10) { // int or long     2 147 483 647 = max int value
+                if (helper.getExponent() != 0) {
+                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                }
+
+                long l = Long.parseLong(builder.toString());
+
+                if ((int) l == l) {
+                    return (int) l; // important casting, used for setting set correct token
+                } else {
+                    return l;
+                }
+
+            } else if (length < 19) { // long
+                if (helper.getExponent() != 0) {
+                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                }
+
+                return Long.parseLong(builder.toString());
+
+            } else if (length == 19) { // long or big integer      9 223 372 036 854 775 808 = max long value
+                if (helper.getExponent() != 0) {
+                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                }
+
+                String number = builder.toString();
+
+                char[] nArray = number.toCharArray();
+
+                int j = helper.isNegative() ? 1 : 0;
+
+                for (int i = 0; i < length; i++) {
+                    if (nArray[j + i] > LONG[i]) {
+                        return new BigDecimal(number).toBigIntegerExact();
+                    }
+                }
+
+                return Long.parseLong(number);
+            } else { // big integer
+
+                // making at first a big decimal
+                // because big integer constructor
+                // cannot handle non java int number
+                return new BigDecimal(builder.toString()).toBigIntegerExact();
+            }
+
+        } else { // decimal number
+
+            return new BigDecimal(builder.toString()); // no float or double parsing
+        }
+    }
+
+    private boolean isInteger(NumberHelper helper) {
+        String fraction = helper.getFractionalPart();
+
+        if (fraction.length() > 0) { // has a fractional part, may be removed
+
+            if (helper.getExponent() == 0) { // has a fractional part but no exponent
+                return false;
+            } else if (helper.isNegativeExponent()) { // has a fractional part and a negative exponent
+                return false;
+            } else { // has a fractional part and a positive exponent
+                return fraction.length() < helper.getExponent(); // check if exponent can remove the fractional part
+            }
+
+        } else { // no fractional part
+            if (helper.isNegativeExponent() && helper.getExponent() > 0) { // negative exponent, need to check trailing zeros
+                int nZero = helper.getTrailingZeroLength();
+
+                return nZero >= helper.getExponent();
+            } else { // may have an exponent, but we don't care
+                return true;
+            }
+        }
+    }
+
+    // Utility method for integer
+    private void removeExponent(StringBuilder builder, boolean negativeExponent, int exponent) {
+        int exponentIndex = builder.indexOf("e");
+
+        if (negativeExponent) { // negative
+            builder.replace(exponentIndex - exponent, builder.length(), ""); // Works only if the string is an integer
+        } else { // positive
+            builder.replace(exponent, builder.length(), "0".repeat(exponent));
+        }
     }
 
     private String parseString() throws JsonException, IOException {
@@ -296,13 +395,11 @@ public class JsonReader extends AbstractJsonReader {
 
     private JsonToken toToken(Number number) {
         if (number instanceof BigDecimal) {
-            return JsonToken.BIG_DECIMAL_TOKEN;
+            return JsonToken.DECIMAL_TOKEN;
         } else if (number instanceof BigInteger) {
             return JsonToken.BIG_INTEGER_TOKEN;
         } else if (number instanceof Long) {
             return JsonToken.LONG_TOKEN;
-        } else if (number instanceof Float) {
-            return JsonToken.FLOAT_TOKEN;
         } else if (number instanceof Integer) {
             return JsonToken.INT_TOKEN;
         }  else {

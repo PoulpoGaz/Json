@@ -46,6 +46,6 @@ public class ExponentContext extends JsonNumberContext {
 
     @Override
     public boolean isExponentContext() {
-        return false;
+        return true;
     }
 }
