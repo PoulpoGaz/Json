@@ -1,5 +1,7 @@
 package fr.poulpogaz.json;
 
+import fr.poulpogaz.json.utils.Pair;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -21,6 +23,8 @@ public interface IJsonReader {
 
     float nextFloat() throws IOException, JsonException;
 
+    double nextDouble() throws IOException, JsonException;
+
     long nextLong() throws IOException, JsonException;
 
     BigInteger nextBigInteger() throws IOException, JsonException;
@@ -36,7 +40,7 @@ public interface IJsonReader {
 
     boolean nextBoolean() throws IOException, JsonException;
 
-    JsonToken next() throws IOException, JsonException;
+    Pair<JsonToken, Object> next() throws IOException, JsonException;
 
 
 
@@ -54,13 +58,11 @@ public interface IJsonReader {
 
     boolean hasNextInt() throws IOException, JsonException;
 
-    boolean hasNextFloat() throws IOException, JsonException;
-
     boolean hasNextLong() throws IOException, JsonException;
 
     boolean hasNextBigInteger() throws IOException, JsonException;
 
-    boolean hasNextBigDecimal() throws IOException, JsonException;
+    boolean hasNextDecimalNumber() throws IOException, JsonException;
 
     boolean hasNextNumber() throws IOException, JsonException;
 

@@ -1,6 +1,7 @@
 package fr.poulpogaz.json;
 
 import fr.poulpogaz.json.context.JsonReadContext;
+import fr.poulpogaz.json.utils.Pair;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,7 +105,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -117,7 +118,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -126,11 +127,24 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     }
 
     @Override
+    public double nextDouble() throws IOException, JsonException {
+        nextToken();
+
+        if (!currentToken.isNumber()) {
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+        }
+
+        consumeToken();
+
+        return numberToken.doubleValue();
+    }
+
+    @Override
     public long nextLong() throws IOException, JsonException {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
 
@@ -144,7 +158,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -165,7 +179,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -182,7 +196,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         nextToken();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or BIG_INTEGER_TOKEN or BIG_DECIMAL_TOKEN expected, but was " + currentToken, true);
+            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -228,7 +242,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     }
 
     @Override
-    public JsonToken next() throws IOException, JsonException {
+    public Pair<JsonToken, Object> next() throws IOException, JsonException {
         nextToken();
 
         if (currentToken == JsonToken.END_TOKEN) {
@@ -237,7 +251,15 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
         consumeToken();
 
-        return previousToken;
+        if (previousToken.isNumber()) {
+            return new Pair<>(previousToken, numberToken);
+        } else if (previousToken == JsonToken.BOOLEAN_TOKEN) {
+            return new Pair<>(previousToken, booleanToken);
+        } else if (previousToken == JsonToken.STRING_TOKEN) {
+            return new Pair<>(previousToken, stringToken);
+        } else {
+            return new Pair<>(previousToken, null);
+        }
     }
 
     protected abstract void nextToken() throws IOException, JsonException;
@@ -285,13 +307,6 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     }
 
     @Override
-    public boolean hasNextFloat() throws IOException, JsonException {
-        nextToken();
-
-        return currentToken == JsonToken.DECIMAL_TOKEN;
-    }
-
-    @Override
     public boolean hasNextLong() throws IOException, JsonException {
         nextToken();
 
@@ -306,7 +321,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     }
 
     @Override
-    public boolean hasNextBigDecimal() throws IOException, JsonException {
+    public boolean hasNextDecimalNumber() throws IOException, JsonException {
         nextToken();
 
         return currentToken == JsonToken.DECIMAL_TOKEN;
@@ -403,7 +418,6 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         in.close();
 
         in = null;
-
     }
 
     protected boolean isClosed() {

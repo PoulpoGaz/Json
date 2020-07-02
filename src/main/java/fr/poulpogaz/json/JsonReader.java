@@ -1,8 +1,6 @@
 package fr.poulpogaz.json;
 
 import com.sun.jdi.InternalException;
-import fr.poulpogaz.json.number.FirstDigitContext;
-import fr.poulpogaz.json.number.JsonNumberContext;
 import fr.poulpogaz.json.number.NumberHelper;
 
 import java.io.IOException;
@@ -10,7 +8,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class JsonReader extends AbstractJsonReader {
 
@@ -186,7 +183,7 @@ public class JsonReader extends AbstractJsonReader {
                     removeFraction(builder);
                 }
 
-                if (exponent != 0) {
+                if (exponent != 0 || exponent != helper.getExponent()) {
                     removeExponent(builder, helper.isNegativeExponent(), exponent);
                 }
 
@@ -244,7 +241,7 @@ public class JsonReader extends AbstractJsonReader {
             } else if (helper.isNegativeExponent()) { // has a fractional part and a negative exponent
                 return false;
             } else { // has a fractional part and a positive exponent
-                return fraction.length() < helper.getExponent(); // check if exponent can remove the fractional part
+                return fraction.length() <= helper.getExponent(); // check if exponent can remove the fractional part
             }
 
         } else { // no fractional part

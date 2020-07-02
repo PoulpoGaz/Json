@@ -1,20 +1,18 @@
 package fr.poulpogaz.json;
 
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 class JsonWriterTest {
 
-    private static final Path DEST = Path.of("src/test/write_test.json");
-
     @Test
     void write() throws IOException, JsonException {
-        IJsonWriter writer = new JsonWriter(Files.newBufferedWriter(DEST));
+        StringWriter sw = new StringWriter();
+
+        IJsonWriter writer = new JsonWriter(sw);
 
         writer.beginObject();
 
@@ -45,5 +43,7 @@ class JsonWriterTest {
         writer.endObject();
 
         writer.close();
+
+        System.out.println(sw);
     }
 }

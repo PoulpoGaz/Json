@@ -3,20 +3,22 @@ package fr.poulpogaz.json;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Reader;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReadTest {
 
-    private InputStream getResource() {
-        return JsonReadTest.class.getResourceAsStream("/read_test.json");
+    private Reader getReader() throws IOException {
+        return Files.newBufferedReader(Path.of("src/test/java/resources/read_test.json"));
     }
 
     @Test
     void read() throws IOException, JsonException {
-        IJsonReader reader = new JsonReader(getResource());
+        IJsonReader reader = new JsonReader(getReader());
 
         reader.beginObject();
 

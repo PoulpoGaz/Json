@@ -3,17 +3,16 @@ package fr.poulpogaz.json;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class JsonPrettyWriterTest {
 
-    private static final Path DEST = Path.of("src/test/write_test.json");
-
     @Test
     void write() throws IOException, JsonException {
-        IJsonWriter writer = new JsonPrettyWriter(Files.newBufferedWriter(DEST));
+        StringWriter sw = new StringWriter();
+
+        IJsonWriter writer = new JsonPrettyWriter(sw);
 
         writer.beginObject();
 
@@ -44,5 +43,7 @@ public class JsonPrettyWriterTest {
         writer.endObject();
 
         writer.close();
+
+        System.out.println(sw);
     }
 }

@@ -1,5 +1,6 @@
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\context\RootReadContext.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\number\FractionContext.java
+C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\number\NumberHelper.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\IJsonWriter.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\JsonException.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\JsonToken.java
@@ -9,6 +10,7 @@ C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\AbstractJsonW
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\JsonReader.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\context\RootWriteContext.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\context\JsonWriteContext.java
+C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\utils\Pair.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\context\ObjectWriteContext.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\AbstractJsonReader.java
 C:\Users\Valentin\JavaProject\json\src\main\java\fr\poulpogaz\json\IJsonReader.java
