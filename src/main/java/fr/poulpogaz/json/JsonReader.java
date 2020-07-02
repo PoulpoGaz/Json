@@ -169,58 +169,57 @@ public class JsonReader extends AbstractJsonReader {
             }
         }
 
-        String digit = helper.getDigitPart();
 
         if (isInteger(helper)) { // integer number
+            int digit = helper.getDigitPart().length();
+            int fraction = helper.getFractionalPart().length();
 
-            int length = digit.length() + (helper.isNegativeExponent() ? -helper.getExponent() : helper.getExponent());
+            int length = digit + (helper.isNegativeExponent() ? -helper.getExponent() : helper.getExponent());
 
-            if (length < 10) { // int
+            if (length <= 19) {
 
-                if (helper.getExponent() != 0) {
-                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                int exponent = helper.getExponent();
+
+                if (fraction != 0) {
+                    exponent -= fraction;
+
+                    removeFraction(builder);
                 }
 
-                return Integer.parseInt(builder.toString());
-
-            } else if (length == 10) { // int or long     2 147 483 647 = max int value
-                if (helper.getExponent() != 0) {
-                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
+                if (exponent != 0) {
+                    removeExponent(builder, helper.isNegativeExponent(), exponent);
                 }
 
-                long l = Long.parseLong(builder.toString());
+                if (length < 10) { // int
+                    return Integer.parseInt(builder.toString());
 
-                if ((int) l == l) {
-                    return (int) l; // important casting, used for setting set correct token
-                } else {
-                    return l;
-                }
+                } else if (length == 10) { // int or long     2 147 483 647 = max int value
+                    long l = Long.parseLong(builder.toString());
 
-            } else if (length < 19) { // long
-                if (helper.getExponent() != 0) {
-                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
-                }
-
-                return Long.parseLong(builder.toString());
-
-            } else if (length == 19) { // long or big integer      9 223 372 036 854 775 808 = max long value
-                if (helper.getExponent() != 0) {
-                    removeExponent(builder, helper.isNegativeExponent(), helper.getExponent());
-                }
-
-                String number = builder.toString();
-
-                char[] nArray = number.toCharArray();
-
-                int j = helper.isNegative() ? 1 : 0;
-
-                for (int i = 0; i < length; i++) {
-                    if (nArray[j + i] > LONG[i]) {
-                        return new BigDecimal(number).toBigIntegerExact();
+                    if ((int) l == l) {
+                        return (int) l; // important casting, used for setting set correct token
+                    } else {
+                        return l;
                     }
-                }
 
-                return Long.parseLong(number);
+                } else if (length < 19) { // long
+                    return Long.parseLong(builder.toString());
+
+                } else  { // long or big integer      9 223 372 036 854 775 808 = max long value
+                    String number = builder.toString();
+
+                    char[] nArray = number.toCharArray();
+
+                    int j = helper.isNegative() ? 1 : 0;
+
+                    for (int i = 0; i < length; i++) {
+                        if (nArray[j + i] > LONG[i]) {
+                            return new BigDecimal(number).toBigIntegerExact();
+                        }
+                    }
+
+                    return Long.parseLong(number);
+                }
             } else { // big integer
 
                 // making at first a big decimal
@@ -260,13 +259,20 @@ public class JsonReader extends AbstractJsonReader {
     }
 
     // Utility method for integer
+    private void removeFraction(StringBuilder number) {
+        int pointIndex = number.indexOf(".");
+
+        number.replace(pointIndex, pointIndex + 1, "");
+    }
+
+    // Utility method for integer
     private void removeExponent(StringBuilder builder, boolean negativeExponent, int exponent) {
         int exponentIndex = builder.indexOf("e");
 
         if (negativeExponent) { // negative
             builder.replace(exponentIndex - exponent, builder.length(), ""); // Works only if the string is an integer
         } else { // positive
-            builder.replace(exponent, builder.length(), "0".repeat(exponent));
+            builder.replace(exponentIndex, builder.length(), "0".repeat(exponent));
         }
     }
 

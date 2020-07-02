@@ -22,56 +22,63 @@ public class ReadNumberTest {
 
         reader.nextKey();
         if (reader.hasNextInt()) {
-            assertEquals(reader.nextInt(), 50);
+            assertEquals(50, reader.nextInt());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextInt()) {
-            assertEquals(reader.nextInt(), Integer.MAX_VALUE);
+            assertEquals(550, reader.nextInt());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextInt()) {
-            assertEquals(reader.nextInt(), 0);
+            assertEquals(Integer.MAX_VALUE, reader.nextInt());
+        } else {
+            throw new IllegalStateException("Fail was " + reader.next());
+        }
+
+        reader.nextKey();
+        if (reader.hasNextInt()) {
+            assertEquals(0, reader.nextInt());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextFloat()) {
-            assertEquals(reader.nextFloat(), 5.3f);
+            assertEquals(5.3f, reader.nextFloat());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextFloat()) {
-            assertEquals(reader.nextFloat(), 123456789.12f);
+            assertEquals(123456789.12f, reader.nextFloat());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextLong()) {
-            assertEquals(reader.nextLong(), -9223372036854775800L);
+            assertEquals( -9223372036854775800L, reader.nextLong());
         } else {
             throw new IllegalStateException("Fail was: " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextBigInteger()) {
-            assertEquals(reader.nextBigInteger(), new BigDecimal("42e42").toBigIntegerExact());
+            assertEquals(new BigDecimal("42e42").toBigIntegerExact(), reader.nextBigInteger());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }
 
         reader.nextKey();
         if (reader.hasNextBigDecimal()) {
-            assertEquals(reader.nextBigDecimal(), new BigDecimal("42e-4242"));
+            assertEquals(new BigDecimal("42e-4242"), reader.nextBigDecimal());
         } else {
             throw new IllegalStateException("Fail was " + reader.next());
         }

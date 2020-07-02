@@ -288,7 +288,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     public boolean hasNextFloat() throws IOException, JsonException {
         nextToken();
 
-        return currentToken == JsonToken.FLOAT_TOKEN;
+        return currentToken == JsonToken.DECIMAL_TOKEN;
     }
 
     @Override
@@ -309,7 +309,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     public boolean hasNextBigDecimal() throws IOException, JsonException {
         nextToken();
 
-        return currentToken == JsonToken.BIG_DECIMAL_TOKEN;
+        return currentToken == JsonToken.DECIMAL_TOKEN;
     }
 
     @Override
