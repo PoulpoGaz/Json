@@ -2,6 +2,10 @@ package fr.poulpogaz.json.number;
 
 import fr.poulpogaz.json.JsonException;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class FirstDigitContext extends JsonNumberContext {
 
     @Override

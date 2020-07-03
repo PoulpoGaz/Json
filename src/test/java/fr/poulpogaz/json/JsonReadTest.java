@@ -10,6 +10,12 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the {@link JsonReader} class
+ *
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonReadTest {
 
     private Reader getReader() throws IOException {
@@ -51,7 +57,6 @@ public class JsonReadTest {
 
         reader.endArray();
         reader.skipValue();
-        reader.endArray();
 
         reader.beginObject();
 

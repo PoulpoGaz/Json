@@ -7,6 +7,10 @@ import fr.poulpogaz.json.tree.value.JsonString;
 
 import java.util.HashMap;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonObject extends HashMap<String, JsonElement> implements JsonElement {
 
     public JsonObject(int initialCapacity) {
@@ -32,7 +36,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
         put(key, JsonNull.INSTANCE);
     }
 
-    public JsonNumber getAsNumber(String key) {
+    public JsonNumber getAsJsonNumber(String key) {
         JsonElement element = get(key);
 
         if (element.isValue()) {
@@ -42,7 +46,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
         }
     }
 
-    public JsonString getAsString(String key) {
+    public JsonString getAsJsonString(String key) {
         JsonElement element = get(key);
 
         if (element.isValue()) {
@@ -52,7 +56,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
         }
     }
 
-    public JsonBoolean getAsBoolean(String key) {
+    public JsonBoolean getAsJsonBoolean(String key) {
         JsonElement element = get(key);
 
         if (element.isValue()) {
@@ -62,7 +66,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
         }
     }
 
-    public JsonNull getAsNull(String key) {
+    public JsonNull getAsJsonNull(String key) {
         JsonElement element = get(key);
 
         if (element.isValue()) {

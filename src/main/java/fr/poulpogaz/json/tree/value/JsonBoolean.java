@@ -5,6 +5,10 @@ import fr.poulpogaz.json.tree.JsonValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonBoolean extends JsonValue {
 
     public static final JsonBoolean TRUE = new JsonBoolean(true);

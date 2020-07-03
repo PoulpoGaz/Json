@@ -2,6 +2,10 @@ package fr.poulpogaz.json.context;
 
 import fr.poulpogaz.json.JsonException;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class ArrayReadContext extends JsonReadContext {
 
     public ArrayReadContext(JsonReadContext parent) {

@@ -3,6 +3,10 @@ package fr.poulpogaz.json.tree;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public abstract class JsonValue implements JsonElement {
 
     public abstract byte getAsByte();

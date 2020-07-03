@@ -7,6 +7,12 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Test class for the {@link JsonWriter} class
+ *
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 class JsonWriterTest {
 
     @Test

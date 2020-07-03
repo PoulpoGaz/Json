@@ -8,6 +8,10 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public abstract class AbstractJsonWriter implements IJsonWriter {
 
     protected final Writer out;

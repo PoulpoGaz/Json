@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonString extends JsonValue {
 
     private final String value;

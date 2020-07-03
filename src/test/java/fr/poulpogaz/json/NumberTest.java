@@ -9,6 +9,14 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test class for the {@link JsonReader#nextInt()},
+ * {@link JsonReader#nextLong()}, {@link JsonReader#nextDouble()},
+ * etc. methods
+ *
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class NumberTest {
 
     @Test

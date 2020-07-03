@@ -1,5 +1,9 @@
 package fr.poulpogaz.json;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public enum JsonToken {
 
     BEGIN_OBJECT_TOKEN(false, false),

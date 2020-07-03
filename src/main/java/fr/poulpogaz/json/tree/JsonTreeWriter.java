@@ -10,6 +10,10 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Map;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonTreeWriter {
 
     public static void write(JsonElement element, Writer writer) throws IOException, JsonException {

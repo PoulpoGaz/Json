@@ -11,6 +11,12 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the {@link JsonTreeReader} class
+ *
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonTreeReaderTest {
 
     private Reader getReader() throws IOException {
@@ -51,13 +57,13 @@ public class JsonTreeReaderTest {
         JsonObject object1 = array.getAsObject(2);
 
         assertNotNull(object1.get("g"));
-        assertTrue(object1.getAsBoolean("g").getAsBoolean());
+        assertTrue(object1.getAsJsonBoolean("g").getAsBoolean());
 
         assertNotNull(object1.get("h"));
-        assertFalse(object1.getAsBoolean("h").getAsBoolean());
+        assertFalse(object1.getAsJsonBoolean("h").getAsBoolean());
 
         assertNotNull(object1.get("i"));
-        assertTrue(object1.getAsNull("i").isNull());
+        assertTrue(object1.getAsJsonNull("i").isNull());
 
         assertNotNull(object1.get("j"));
         assertEquals(object1.getAsObject("j").size(), 0);
@@ -68,7 +74,7 @@ public class JsonTreeReaderTest {
 
     private void checkStringArray(JsonArray array, String[] strings) {
         for (int i = 0; i < array.size(); i++) {
-            assertEquals(array.getAsString(i).getAsString(), strings[i]);
+            assertEquals(array.getAsJsonString(i).getAsString(), strings[i]);
         }
     }
 }

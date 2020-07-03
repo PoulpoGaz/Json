@@ -9,25 +9,59 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * A json file reader. It reads json file as a
+ * stream of tokens defined in the enumeration
+ * {@link JsonToken}
+ *
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonReader extends AbstractJsonReader {
 
-    private static final char[] LONG = {'9', '2','2','3', '3','7','2', '0','3','6', '8','5','4', '7','7','5', '8','0','8'};;
+    /** Contains all digit of the maximum value of {@code long} **/
+    private static final char[] LONG_MAXIMUM = {'9', '2','2','3', '3','7','2', '0','3','6', '8','5','4', '7','7','5', '8','0','7'};
 
+    /** Contains all digit of the minimum value of {@code long} **/
+    private static final char[] LONG_MINIMUM = {'9', '2','2','3', '3','7','2', '0','3','6', '8','5','4', '7','7','5', '8','0','8'};
+
+    /** Specials position value **/
     private static final int START = -2;
     private static final int EOF = -1;
 
     private char[] buffer = new char[4096];
     private int pos = START;
 
+    /**
+     * Creates a new instance that reads a json stream from an
+     * {@link InputStream}
+     *
+     * @param in a json encoded input stream
+     */
     public JsonReader(InputStream in) {
         super(in);
     }
 
+    /**
+     * Creates a new instance that reads a json stream from an
+     * {@link Reader}
+     *
+     * @param in a json encoded reader
+     */
     public JsonReader(Reader in) {
         super(in);
     }
 
-    public void nextToken() throws IOException, JsonException {
+    /**
+     * Peek the next token. The token value is stored in
+     * {@link #currentToken}. His value can be stored
+     * in {@link #numberToken}, {@link #stringToken} or
+     * {@link #booleanToken}
+     *
+     * @throws IOException If an I/O errors occurs
+     * @throws JsonException IF there is a syntax problem or if end of file is reached
+     */
+    public void peek() throws IOException, JsonException {
         if (currentToken != null || isClosed()) {
             return;
         }
@@ -131,6 +165,14 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * returns true if the next characters in the buffer matches the input {@code String}
+     *
+     * @param str the string to compare with the buffer
+     * @return true if the next characters in the buffer matches the input {@code String}
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException If end of file is reached
+     */
     private boolean match(String str) throws IOException, JsonException {
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
@@ -143,6 +185,23 @@ public class JsonReader extends AbstractJsonReader {
         return true;
     }
 
+    /**
+     * Parse the next number if exists.
+     *
+     * @implNote
+     * First, we construct a {@link StringBuilder} which contains
+     * all the digit, and extra information about the number. At the same
+     * time, we check the syntax with the {@link NumberHelper} class/
+     * Then, if the number is a decimal number, we just return
+     * a {@link BigDecimal} object, else we try to parse it to a {@code int}
+     * or a [@code long} or a {@link BigInteger} depending of the length of
+     * the number
+     *
+     * @return the parsed number
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem or if end of file is reached
+     * @see NumberHelper
+     */
     private Number parseNumber() throws JsonException, IOException {
         StringBuilder builder = new StringBuilder();
 
@@ -206,11 +265,12 @@ public class JsonReader extends AbstractJsonReader {
                     String number = builder.toString();
 
                     char[] nArray = number.toCharArray();
+                    char[] long_ = helper.isNegative() ? LONG_MINIMUM : LONG_MAXIMUM;
 
                     int j = helper.isNegative() ? 1 : 0;
 
                     for (int i = 0; i < length; i++) {
-                        if (nArray[j + i] > LONG[i]) {
+                        if (nArray[i + j] > long_[i]) {
                             return new BigDecimal(number).toBigIntegerExact();
                         }
                     }
@@ -231,6 +291,14 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * Utility method for {@link #parseNumber()} which determines if the
+     * number to parse is an integer or a decimal number
+     *
+     * @param helper the helper class that contains use full information
+     * @return true if the number is an integer
+     * @see NumberHelper
+     */
     private boolean isInteger(NumberHelper helper) {
         String fraction = helper.getFractionalPart();
 
@@ -255,14 +323,27 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
-    // Utility method for integer
+
+    /**
+     * Utility method for integer which just removes the dot in the
+     * {@code builder}
+     *
+     * @param number the {@link StringBuilder} that contains the number
+     */
     private void removeFraction(StringBuilder number) {
         int pointIndex = number.indexOf(".");
 
         number.replace(pointIndex, pointIndex + 1, "");
     }
 
-    // Utility method for integer
+    /**
+     * Utility method for integer which removes the exponent in the
+     * {@code builder}
+     *
+     * @param builder the {@link StringBuilder} that contains the number
+     * @param negativeExponent true if the number has a negative exponent
+     * @param exponent the value of the exponent
+     */
     private void removeExponent(StringBuilder builder, boolean negativeExponent, int exponent) {
         int exponentIndex = builder.indexOf("e");
 
@@ -273,6 +354,13 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * Parses the next string if exists
+     *
+     * @return the parsed string
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem or if end of file is reached
+     */
     private String parseString() throws JsonException, IOException {
         StringBuilder builder = new StringBuilder();
 
@@ -309,6 +397,13 @@ public class JsonReader extends AbstractJsonReader {
         return builder.toString();
     }
 
+    /**
+     * Parse the next hexadecimal string if exists
+     *
+     * @return the parsed hexadecimal string
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem or if end of file is reached
+     */
     private char parseHex() throws IOException, JsonException {
         StringBuilder builder = new StringBuilder();
 
@@ -320,7 +415,7 @@ public class JsonReader extends AbstractJsonReader {
     }
 
     /**
-     * Refill is needed the buffer
+     * Refills the buffer if needed
      * @throws IOException If an I/O error occurs
      */
     private void refillBuffer() throws IOException {
@@ -340,7 +435,9 @@ public class JsonReader extends AbstractJsonReader {
     }
 
     /**
-     * @return the next char and consume it
+     * Returns and consumes the next char
+     *
+     * @return the next char
      * @throws JsonException If end of file is reached
      * @throws IOException If an I/O error occurs
      */
@@ -354,6 +451,13 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * return the char at the current position
+     *
+     * @return the peeked char
+     * @throws JsonException If end of file is reached
+     * @throws IOException If an I/O error occurs
+     */
     private char peekNextChar() throws JsonException, IOException {
         if (pos >= buffer.length) { // need to increase the buffer
             int read = in.read();
@@ -372,6 +476,11 @@ public class JsonReader extends AbstractJsonReader {
         return buffer[pos];
     }
 
+    /**
+     * Skips whitespaces
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void skipWhiteSpaces() throws IOException{
         while (true) {
             refillBuffer();
@@ -396,6 +505,11 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * Convert a number to the appropriate token
+     * @param number the number to be converted
+     * @return the token
+     */
     private JsonToken toToken(Number number) {
         if (number instanceof BigDecimal) {
             return JsonToken.DECIMAL_TOKEN;
@@ -410,6 +524,11 @@ public class JsonReader extends AbstractJsonReader {
         }
     }
 
+    /**
+     * Sets the current token.
+     *
+     * @param token The new token
+     */
     private void setCurrentToken(JsonToken token) {
         if (currentToken == null) {
             currentToken = token;

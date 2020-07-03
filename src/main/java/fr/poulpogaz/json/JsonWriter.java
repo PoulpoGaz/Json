@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonWriter extends AbstractJsonWriter {
 
     public JsonWriter(OutputStream os) {

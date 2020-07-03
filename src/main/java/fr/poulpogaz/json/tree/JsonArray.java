@@ -7,6 +7,10 @@ import fr.poulpogaz.json.tree.value.JsonString;
 
 import java.util.ArrayList;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonArray extends ArrayList<JsonElement> implements JsonElement {
 
     public JsonArray(int initialCapacity) {
@@ -32,7 +36,7 @@ public class JsonArray extends ArrayList<JsonElement> implements JsonElement {
         add(JsonNull.INSTANCE);
     }
 
-    public JsonNumber getAsNumber(int index) {
+    public JsonNumber getAsJsonNumber(int index) {
         JsonElement element = get(index);
 
         if (element.isValue()) {
@@ -42,7 +46,7 @@ public class JsonArray extends ArrayList<JsonElement> implements JsonElement {
         }
     }
 
-    public JsonString getAsString(int index) {
+    public JsonString getAsJsonString(int index) {
         JsonElement element = get(index);
 
         if (element.isValue()) {
@@ -52,7 +56,7 @@ public class JsonArray extends ArrayList<JsonElement> implements JsonElement {
         }
     }
 
-    public JsonBoolean getAsBoolean(int index) {
+    public JsonBoolean getAsJsonBoolean(int index) {
         JsonElement element = get(index);
 
         if (element.isValue()) {
@@ -62,7 +66,7 @@ public class JsonArray extends ArrayList<JsonElement> implements JsonElement {
         }
     }
 
-    public JsonNull getAsNull(int index) {
+    public JsonNull getAsJsonNull(int index) {
         JsonElement element = get(index);
 
         if (element.isValue()) {

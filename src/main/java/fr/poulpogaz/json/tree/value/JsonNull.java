@@ -5,6 +5,10 @@ import fr.poulpogaz.json.tree.JsonValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public final class JsonNull extends JsonValue {
 
     public static final JsonNull INSTANCE = new JsonNull();

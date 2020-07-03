@@ -2,6 +2,10 @@ package fr.poulpogaz.json;
 
 import java.io.IOException;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public interface IJsonWriter {
 
     IJsonWriter beginObject() throws IOException, JsonException;

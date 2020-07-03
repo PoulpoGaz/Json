@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+/**
+ * @author PoulpoGaz
+ * @version 1.0
+ */
 public class JsonTreeReader {
 
     public static JsonElement read(Reader reader) throws IOException, JsonException {
