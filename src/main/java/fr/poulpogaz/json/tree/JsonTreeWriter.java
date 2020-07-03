@@ -18,7 +18,7 @@ public class JsonTreeWriter {
         } else if (element.isArray()) {
             write((JsonArray) element, new JsonPrettyWriter(writer));
         } else if (element.isValue()) {
-            write((JsonArray) element, new JsonPrettyWriter(writer));
+            write((JsonValue) element, new JsonPrettyWriter(writer));
         }
     }
 
@@ -41,7 +41,7 @@ public class JsonTreeWriter {
         } else if (element.isArray()) {
             write((JsonArray) element, new JsonPrettyWriter(os));
         } else if (element.isValue()) {
-            write((JsonArray) element, new JsonPrettyWriter(os));
+            write((JsonValue) element, new JsonPrettyWriter(os));
         }
     }
 
@@ -85,7 +85,7 @@ public class JsonTreeWriter {
         } else if (element.isArray()) {
             writeImpl((JsonArray) element, writer);
         } else if (element.isValue()) {
-            writeImpl((JsonArray) element, writer);
+            writeImpl((JsonValue) element, writer);
         }
     }
 

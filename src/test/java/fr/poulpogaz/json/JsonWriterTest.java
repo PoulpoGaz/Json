@@ -3,16 +3,15 @@ package fr.poulpogaz.json;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 class JsonWriterTest {
 
     @Test
     void write() throws IOException, JsonException {
-        StringWriter sw = new StringWriter();
-
-        IJsonWriter writer = new JsonWriter(sw);
+        IJsonWriter writer = new JsonWriter(Files.newBufferedWriter(Path.of("src/test/json_writer_test.json")));
 
         writer.beginObject();
 
@@ -43,7 +42,5 @@ class JsonWriterTest {
         writer.endObject();
 
         writer.close();
-
-        System.out.println(sw);
     }
 }

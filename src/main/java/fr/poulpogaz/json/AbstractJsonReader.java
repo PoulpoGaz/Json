@@ -431,7 +431,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
     protected void throwException(String message, boolean showContext) throws JsonException {
         if (showContext) {
-            throw new JsonException(message + " ( in" + context + ")");
+            throw new JsonException(message + " (in " + context + ")");
         } else {
             throw new JsonException(message);
         }

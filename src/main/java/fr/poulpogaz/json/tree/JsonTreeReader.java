@@ -61,7 +61,7 @@ public class JsonTreeReader {
 
         JsonArray array = new JsonArray();
 
-        while (!reader.isObjectEnd()) {
+        while (!reader.isArrayEnd()) {
             array.add(readImpl(reader));
         }
 
@@ -78,6 +78,8 @@ public class JsonTreeReader {
         } else if (reader.hasNextBoolean()) {
             return JsonBoolean.of(reader.nextBoolean());
         } else {
+            reader.nextNull();
+
             return JsonNull.INSTANCE;
         }
     }
