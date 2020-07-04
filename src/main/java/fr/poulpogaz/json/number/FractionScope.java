@@ -6,7 +6,7 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class FractionContext extends JsonNumberContext {
+public class FractionScope extends JsonNumberScope {
 
     @Override
     public void newDigit(char digit) throws JsonException {
@@ -24,16 +24,16 @@ public class FractionContext extends JsonNumberContext {
     }
 
     @Override
-    public JsonNumberContext newExponent() throws JsonException {
+    public JsonNumberScope newExponent() throws JsonException {
         if (state != STATE_START) {
-            return new ExponentContext();
+            return new ExponentScope();
         } else {
             throw new JsonException();
         }
     }
 
     @Override
-    public JsonNumberContext newPoint() throws JsonException {
+    public JsonNumberScope newPoint() throws JsonException {
         throw new JsonException();
     }
 
@@ -45,7 +45,7 @@ public class FractionContext extends JsonNumberContext {
     }
 
     @Override
-    public boolean isFractionContext() {
+    public boolean isFractionScope() {
         return true;
     }
 }

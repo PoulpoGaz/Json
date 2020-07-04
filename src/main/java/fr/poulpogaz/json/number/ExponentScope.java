@@ -6,7 +6,7 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class ExponentContext extends JsonNumberContext {
+public class ExponentScope extends JsonNumberScope {
 
     @Override
     public void newHyphen() throws JsonException {
@@ -32,12 +32,12 @@ public class ExponentContext extends JsonNumberContext {
     }
 
     @Override
-    public JsonNumberContext newExponent() throws JsonException {
+    public JsonNumberScope newExponent() throws JsonException {
         throw new JsonException();
     }
 
     @Override
-    public JsonNumberContext newPoint() throws JsonException {
+    public JsonNumberScope newPoint() throws JsonException {
         throw new JsonException();
     }
 
@@ -49,7 +49,7 @@ public class ExponentContext extends JsonNumberContext {
     }
 
     @Override
-    public boolean isExponentContext() {
+    public boolean isExponentScope() {
         return true;
     }
 }

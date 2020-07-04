@@ -1,6 +1,6 @@
 package fr.poulpogaz.json;
 
-import fr.poulpogaz.json.context.JsonWriteContext;
+import fr.poulpogaz.json.scope.JsonWriteScope;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,7 +21,7 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     protected final Writer out;
 
     /** An object which verify the syntax and acts as a stack **/
-    protected JsonWriteContext context;
+    protected JsonWriteScope scope;
 
     /**
      * Creates a new instance that writes json to a
@@ -42,7 +42,7 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     public AbstractJsonWriter(Writer out) {
         this.out = out;
 
-        context = JsonWriteContext.createRootContext();
+        scope = JsonWriteScope.createRootContext();
     }
 
     /**
@@ -338,7 +338,7 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
      * @throws IOException If an I/O error occurs
      */
     protected boolean writeCommaIfNeeded() throws IOException {
-        if (context.needComma()) {
+        if (scope.needComma()) {
             out.write(",");
 
             return true;
@@ -367,7 +367,7 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
      */
     @Override
     public void close() throws IOException, JsonException {
-        if (context.close() != null) {
+        if (scope.close() != null) {
             throw new JsonException("Json is not terminated");
         }
 

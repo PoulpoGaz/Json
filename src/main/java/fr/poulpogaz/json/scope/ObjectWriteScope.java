@@ -1,4 +1,4 @@
-package fr.poulpogaz.json.context;
+package fr.poulpogaz.json.scope;
 
 import fr.poulpogaz.json.JsonException;
 
@@ -6,9 +6,9 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class ObjectWriteContext extends JsonWriteContext {
+public class ObjectWriteScope extends JsonWriteScope {
 
-    public ObjectWriteContext(JsonWriteContext parent) {
+    public ObjectWriteScope(JsonWriteScope parent) {
         super(parent, STATE_EMPTY);
     }
 
@@ -46,7 +46,7 @@ public class ObjectWriteContext extends JsonWriteContext {
     }
 
     @Override
-    public JsonWriteContext close() throws JsonException {
+    public JsonWriteScope close() throws JsonException {
         if (state == STATE_AFTER_VALUE || state == STATE_EMPTY) {
             state = STATE_END;
             return parent;

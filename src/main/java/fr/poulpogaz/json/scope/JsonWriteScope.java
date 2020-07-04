@@ -1,4 +1,4 @@
-package fr.poulpogaz.json.context;
+package fr.poulpogaz.json.scope;
 
 import fr.poulpogaz.json.JsonException;
 
@@ -6,10 +6,10 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public abstract class JsonWriteContext {
+public abstract class JsonWriteScope {
 
-    public static JsonWriteContext createRootContext() {
-        return new RootWriteContext();
+    public static JsonWriteScope createRootContext() {
+        return new RootWriteScope();
     }
 
     public static final int STATE_EMPTY = 0;
@@ -17,24 +17,24 @@ public abstract class JsonWriteContext {
     public static final int STATE_AFTER_VALUE = 2;
     public static final int STATE_END = 3;
 
-    protected final JsonWriteContext parent;
+    protected final JsonWriteScope parent;
     protected int state;
 
-    public JsonWriteContext(JsonWriteContext parent, int state) {
+    public JsonWriteScope(JsonWriteScope parent, int state) {
         this.parent = parent;
         this.state = state;
     }
 
-    public JsonWriteContext createObjectContext() throws JsonException {
+    public JsonWriteScope createObjectScope() throws JsonException {
         newValue();
 
-        return new ObjectWriteContext(this);
+        return new ObjectWriteScope(this);
     }
 
-    public JsonWriteContext createArrayContext() throws JsonException {
+    public JsonWriteScope createArrayScope() throws JsonException {
         newValue();
         
-        return new ArrayWriteContext(this);
+        return new ArrayWriteScope(this);
     }
 
     public abstract void newKey() throws JsonException;
@@ -43,7 +43,7 @@ public abstract class JsonWriteContext {
 
     public abstract void newField() throws JsonException;
 
-    public abstract JsonWriteContext close() throws JsonException;
+    public abstract JsonWriteScope close() throws JsonException;
 
     public boolean isRoot() {
         return false;

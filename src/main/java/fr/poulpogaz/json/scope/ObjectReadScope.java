@@ -1,4 +1,4 @@
-package fr.poulpogaz.json.context;
+package fr.poulpogaz.json.scope;
 
 import fr.poulpogaz.json.JsonException;
 
@@ -6,14 +6,14 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class ObjectReadContext extends JsonReadContext {
+public class ObjectReadScope extends JsonReadScope {
 
-    public ObjectReadContext(JsonReadContext parent) {
+    public ObjectReadScope(JsonReadScope parent) {
         super(parent, STATE_EMPTY);
     }
 
     @Override
-    public JsonReadContext close() throws JsonException {
+    public JsonReadScope close() throws JsonException {
         if (state == STATE_AFTER_VALUE || state == STATE_EMPTY) {
             return parent;
         } else {

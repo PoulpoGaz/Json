@@ -44,7 +44,7 @@ public class JsonWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter beginObject() throws IOException, JsonException {
         writeCommaIfNeeded();
-        context = context.createObjectContext();
+        scope = scope.createObjectScope();
         out.write('{');
 
         return this;
@@ -59,7 +59,7 @@ public class JsonWriter extends AbstractJsonWriter {
      */
     @Override
     public IJsonWriter endObject() throws IOException, JsonException {
-        context = context.close();
+        scope = scope.close();
         out.write('}');
 
         return this;
@@ -75,7 +75,7 @@ public class JsonWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter beginArray() throws IOException, JsonException {
         writeCommaIfNeeded();
-        context = context.createArrayContext();
+        scope = scope.createArrayScope();
         out.write('[');
 
         return this;
@@ -90,7 +90,7 @@ public class JsonWriter extends AbstractJsonWriter {
      */
     @Override
     public IJsonWriter endArray() throws IOException, JsonException {
-        context = context.close();
+        scope = scope.close();
         out.write(']');
 
         return this;
@@ -107,7 +107,7 @@ public class JsonWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter key(String key) throws IOException, JsonException {
         writeCommaIfNeeded();
-        context.newKey();
+        scope.newKey();
         writeString(key);
         out.write(":");
 
@@ -126,7 +126,7 @@ public class JsonWriter extends AbstractJsonWriter {
      */
     protected IJsonWriter value(String value, boolean wrap) throws IOException, JsonException {
         writeCommaIfNeeded();
-        context.newValue();
+        scope.newValue();
 
         if (wrap) {
             writeString(value);
@@ -150,7 +150,7 @@ public class JsonWriter extends AbstractJsonWriter {
      */
     protected IJsonWriter field(String key, String value, boolean wrap) throws IOException, JsonException {
         writeCommaIfNeeded();
-        context.newField();
+        scope.newField();
         writeString(key);
         out.write(":");
 

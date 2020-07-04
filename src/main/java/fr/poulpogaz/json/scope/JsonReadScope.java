@@ -1,4 +1,4 @@
-package fr.poulpogaz.json.context;
+package fr.poulpogaz.json.scope;
 
 import fr.poulpogaz.json.JsonException;
 
@@ -6,10 +6,10 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public abstract class JsonReadContext {
+public abstract class JsonReadScope {
 
-    public static JsonReadContext createRootContext() {
-        return new RootReadContext();
+    public static JsonReadScope createRootContext() {
+        return new RootReadScope();
     }
 
     public static final int STATE_EMPTY = 0;
@@ -19,27 +19,27 @@ public abstract class JsonReadContext {
     public static final int STATE_AFTER_VALUE = 4;
     public static final int STATE_END = 5;
 
-    protected final JsonReadContext parent;
+    protected final JsonReadScope parent;
     protected int state;
 
-    public JsonReadContext(JsonReadContext parent, int state) {
+    public JsonReadScope(JsonReadScope parent, int state) {
         this.parent = parent;
         this.state = state;
     }
 
-    public JsonReadContext createObjectContext() throws JsonException {
+    public JsonReadScope createObjectScope() throws JsonException {
         newValue();
 
-        return new ObjectReadContext(this);
+        return new ObjectReadScope(this);
     }
 
-    public JsonReadContext createArrayContext() throws JsonException {
+    public JsonReadScope createArrayScope() throws JsonException {
         newValue();
 
-        return new ArrayReadContext(this);
+        return new ArrayReadScope(this);
     }
 
-    public abstract JsonReadContext close() throws JsonException;
+    public abstract JsonReadScope close() throws JsonException;
 
     public abstract void newKey() throws JsonException;
 

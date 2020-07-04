@@ -70,7 +70,7 @@ public class JsonReader extends AbstractJsonReader {
             skipWhiteSpaces();
 
             if (pos < 0) { // EOF
-                context.close();
+                scope.close();
                 currentToken = JsonToken.END_TOKEN;
                 return;
             }
@@ -79,52 +79,52 @@ public class JsonReader extends AbstractJsonReader {
 
             switch (c) {
                 case '{' -> {
-                    context = context.createObjectContext();
+                    scope = scope.createObjectScope();
                     setCurrentToken(JsonToken.BEGIN_OBJECT_TOKEN);
                     pos++;
                     return;
                 }
                 case '}' -> {
-                    context = context.close();
+                    scope = scope.close();
                     setCurrentToken(JsonToken.END_OBJECT_TOKEN);
                     pos++;
                     return;
                 }
                 case '[' -> {
-                    context = context.createArrayContext();
+                    scope = scope.createArrayScope();
                     setCurrentToken(JsonToken.BEGIN_ARRAY_TOKEN);
                     pos++;
                     return;
                 }
                 case ']' -> {
-                    context = context.close();
+                    scope = scope.close();
                     setCurrentToken(JsonToken.END_ARRAY_TOKEN);
                     pos++;
                     return;
                 }
                 case ',' -> {
-                    context.newComma();
+                    scope.newComma();
                     pos++;
                 }
                 case ':' -> {
-                    context.newColon();
+                    scope.newColon();
                     pos++;
                 }
                 case '"' -> {
                     stringToken = parseString();
 
-                    if (context.mayNeedKey()) {
-                        context.newKey();
+                    if (scope.mayNeedKey()) {
+                        scope.newKey();
 
                         setCurrentToken(JsonToken.KEY_TOKEN);
                     } else {
-                        context.newValue();
+                        scope.newValue();
                         setCurrentToken(JsonToken.STRING_TOKEN);
                     }
                     return;
                 }
                 case 'n' -> {
-                    context.newValue();
+                    scope.newValue();
                     if (match("null")) { // null
                         setCurrentToken(JsonToken.NULL_TOKEN);
                         return;
@@ -133,7 +133,7 @@ public class JsonReader extends AbstractJsonReader {
                     }
                 }
                 case 't' -> {
-                    context.newValue();
+                    scope.newValue();
                     if (match("true")) { // true
                         booleanToken = true;
                         setCurrentToken(JsonToken.BOOLEAN_TOKEN);
@@ -144,7 +144,7 @@ public class JsonReader extends AbstractJsonReader {
                     }
                 }
                 case 'f' -> {
-                    context.newValue();
+                    scope.newValue();
                     if (match("false")) { // false
                         booleanToken = false;
                         setCurrentToken(JsonToken.BOOLEAN_TOKEN);
@@ -155,7 +155,7 @@ public class JsonReader extends AbstractJsonReader {
                     }
                 }
                 case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-' -> {
-                    context.newValue();
+                    scope.newValue();
                     numberToken = parseNumber();
                     setCurrentToken(toToken(numberToken));
                     return;

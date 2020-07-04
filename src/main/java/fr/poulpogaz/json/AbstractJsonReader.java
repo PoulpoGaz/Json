@@ -1,6 +1,6 @@
 package fr.poulpogaz.json;
 
-import fr.poulpogaz.json.context.JsonReadContext;
+import fr.poulpogaz.json.scope.JsonReadScope;
 import fr.poulpogaz.json.utils.Pair;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
 
     /** An object which verify the syntax and acts as a stack **/
-    protected JsonReadContext context;
+    protected JsonReadScope scope;
 
     /** The last token **/
     protected JsonToken previousToken = null;
@@ -63,7 +63,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     public AbstractJsonReader(Reader in) {
         this.in = in;
 
-        context = JsonReadContext.createRootContext();
+        scope = JsonReadScope.createRootContext();
     }
 
     /**
@@ -725,7 +725,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
         currentToken = null;
         previousToken = null;
-        context = null;
+        scope = null;
 
         stringToken = null;
         numberToken = null;
@@ -761,7 +761,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
      */
     protected void throwException(String message, boolean showContext) throws JsonException {
         if (showContext) {
-            throw new JsonException(message + " (in " + context + ")");
+            throw new JsonException(message + " (in " + scope + ")");
         } else {
             throw new JsonException(message);
         }

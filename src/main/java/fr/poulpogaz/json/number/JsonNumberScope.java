@@ -6,7 +6,7 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public abstract class JsonNumberContext {
+public abstract class JsonNumberScope {
 
     public static final int STATE_START = 0;
     public static final int STATE_DO_NOT_EXPECT_DIGIT = 1;
@@ -15,7 +15,7 @@ public abstract class JsonNumberContext {
 
     protected int state;
 
-    public JsonNumberContext() {
+    public JsonNumberScope() {
         this.state = STATE_START;
     }
 
@@ -26,21 +26,21 @@ public abstract class JsonNumberContext {
 
     public abstract void newPlus() throws JsonException;
 
-    public abstract JsonNumberContext newExponent() throws JsonException;
+    public abstract JsonNumberScope newExponent() throws JsonException;
 
-    public abstract JsonNumberContext newPoint() throws JsonException;
+    public abstract JsonNumberScope newPoint() throws JsonException;
 
     public abstract void close() throws JsonException;
 
-    public boolean isFirstDigitContext() {
+    public boolean isFirstDigitScope() {
         return false;
     }
 
-    public boolean isFractionContext() {
+    public boolean isFractionScope() {
         return false;
     }
 
-    public boolean isExponentContext() {
+    public boolean isExponentScope() {
         return false;
     }
 }

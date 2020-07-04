@@ -6,9 +6,9 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class NumberHelper extends JsonNumberContext{
+public class NumberHelper extends JsonNumberScope {
 
-    private JsonNumberContext context;
+    private JsonNumberScope scope;
 
     private final StringBuilder digitPart = new StringBuilder();
     private final StringBuilder fractionalPart = new StringBuilder();
@@ -20,14 +20,14 @@ public class NumberHelper extends JsonNumberContext{
     private boolean isNegative = false;
 
     public NumberHelper() {
-        context = new FirstDigitContext();
+        scope = new FirstDigitScope();
     }
 
     @Override
     public void newDigit(char digit) throws JsonException {
-        context.newDigit(digit);
+        scope.newDigit(digit);
 
-        if (context.isFirstDigitContext()) {
+        if (scope.isFirstDigitScope()) {
             digitPart.append(digit);
 
             if (digit == '0') {
@@ -36,46 +36,46 @@ public class NumberHelper extends JsonNumberContext{
                 trailingZeroLength = 0;
             }
 
-        } else if (context.isFractionContext()) {
+        } else if (scope.isFractionScope()) {
             fractionalPart.append(digit);
-        } else if (context.isExponentContext()) { // more difficult when there's an exponent
+        } else if (scope.isExponentScope()) { // more difficult when there's an exponent
             exponent = exponent * 10 + (digit - '0');
         }
     }
 
     @Override
     public void newHyphen() throws JsonException {
-        context.newHyphen();
+        scope.newHyphen();
 
-        if (context.isFirstDigitContext()) {
+        if (scope.isFirstDigitScope()) {
             isNegative = true;
-        } else if (context.isExponentContext()) {
+        } else if (scope.isExponentScope()) {
             isNegativeExponent = true;
         }
     }
 
     @Override
     public void newPlus() throws JsonException {
-        context.newPlus();
+        scope.newPlus();
     }
 
     @Override
-    public JsonNumberContext newExponent() throws JsonException {
-        context = context.newExponent();
+    public JsonNumberScope newExponent() throws JsonException {
+        scope = scope.newExponent();
 
-        return context;
+        return scope;
     }
 
     @Override
-    public JsonNumberContext newPoint() throws JsonException {
-        context = context.newPoint();
+    public JsonNumberScope newPoint() throws JsonException {
+        scope = scope.newPoint();
 
-        return context;
+        return scope;
     }
 
     @Override
     public void close() throws JsonException {
-        context.close();
+        scope.close();
 
         closed = true;
     }

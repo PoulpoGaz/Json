@@ -6,7 +6,7 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class FirstDigitContext extends JsonNumberContext {
+public class FirstDigitScope extends JsonNumberScope {
 
     @Override
     public void newDigit(char digit) throws JsonException {
@@ -36,18 +36,18 @@ public class FirstDigitContext extends JsonNumberContext {
     }
 
     @Override
-    public JsonNumberContext newExponent() throws JsonException {
+    public JsonNumberScope newExponent() throws JsonException {
         if (state != STATE_START && state != STATE_EXPECT_DIGIT) {
-            return new ExponentContext();
+            return new ExponentScope();
         } else {
             throw new JsonException();
         }
     }
 
     @Override
-    public JsonNumberContext newPoint() throws JsonException {
+    public JsonNumberScope newPoint() throws JsonException {
         if (state != STATE_START && state != STATE_EXPECT_DIGIT) {
-            return new FractionContext();
+            return new FractionScope();
         } else {
             throw new JsonException();
         }
@@ -61,7 +61,7 @@ public class FirstDigitContext extends JsonNumberContext {
     }
 
     @Override
-    public boolean isFirstDigitContext() {
+    public boolean isFirstDigitScope() {
         return true;
     }
 }

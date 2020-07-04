@@ -67,8 +67,8 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter beginObject() throws IOException, JsonException {
         boolean comma = writeCommaIfNeeded();
-        boolean wasArray = context.isArray();
-        context = context.createObjectContext();
+        boolean wasArray = scope.isArray();
+        scope = scope.createObjectScope();
 
         if (comma || wasArray) {
             newLine();
@@ -89,7 +89,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
      */
     @Override
     public IJsonWriter endObject() throws IOException, JsonException {
-        context = context.close();
+        scope = scope.close();
         depth--;
         newLine();
         out.write('}');
@@ -107,8 +107,8 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter beginArray() throws IOException, JsonException {
         boolean comma = writeCommaIfNeeded();
-        boolean wasArray = context.isArray();
-        context = context.createArrayContext();
+        boolean wasArray = scope.isArray();
+        scope = scope.createArrayScope();
 
         if (comma || wasArray) {
             newLine();
@@ -129,7 +129,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
      */
     @Override
     public IJsonWriter endArray() throws IOException, JsonException {
-        context = context.close();
+        scope = scope.close();
         depth--;
         newLine();
         out.write(']');
@@ -148,7 +148,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter key(String key) throws IOException, JsonException {
         writeCommaIfNeeded();
-        context.newKey();
+        scope.newKey();
         newLine();
         writeString(key);
         out.write(": ");
@@ -169,9 +169,9 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     protected IJsonWriter value(String value, boolean wrap) throws IOException, JsonException {
         writeCommaIfNeeded();
-        context.newValue();
+        scope.newValue();
 
-        if (context.isArray()) {
+        if (scope.isArray()) {
             newLine();
         }
 
@@ -198,7 +198,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     protected IJsonWriter field(String key, String value, boolean wrap) throws IOException, JsonException {
         writeCommaIfNeeded();
         newLine();
-        context.newField();
+        scope.newField();
         writeString(key);
         out.write(": ");
 

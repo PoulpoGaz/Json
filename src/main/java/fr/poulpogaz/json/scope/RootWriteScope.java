@@ -1,4 +1,4 @@
-package fr.poulpogaz.json.context;
+package fr.poulpogaz.json.scope;
 
 import fr.poulpogaz.json.JsonException;
 
@@ -6,9 +6,9 @@ import fr.poulpogaz.json.JsonException;
  * @author PoulpoGaz
  * @version 1.0
  */
-public class RootWriteContext extends JsonWriteContext {
+public class RootWriteScope extends JsonWriteScope {
 
-    public RootWriteContext() {
+    public RootWriteScope() {
         super(null, STATE_EXPECT_VALUE);
     }
 
@@ -32,7 +32,7 @@ public class RootWriteContext extends JsonWriteContext {
     }
 
     @Override
-    public JsonWriteContext close() {
+    public JsonWriteScope close() {
         return null;
     }
 
