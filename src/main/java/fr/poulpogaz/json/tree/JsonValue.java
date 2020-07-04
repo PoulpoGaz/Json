@@ -1,8 +1,12 @@
 package fr.poulpogaz.json.tree;
 
+import fr.poulpogaz.json.tree.value.JsonBoolean;
+import fr.poulpogaz.json.tree.value.JsonNull;
+import fr.poulpogaz.json.tree.value.JsonNumber;
+import fr.poulpogaz.json.tree.value.JsonString;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import fr.poulpogaz.json.tree.value.*;
 
 /**
  * A class that represents a json value

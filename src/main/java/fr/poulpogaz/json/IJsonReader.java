@@ -356,6 +356,7 @@ public interface IJsonReader {
      * Close the streams and releases resources
      *
      * @throws IOException If an I/O error occurs
+     * @see java.io.Writer#close()
      */
     void close() throws IOException;
 }

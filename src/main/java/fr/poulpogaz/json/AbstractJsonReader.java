@@ -717,6 +717,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
      * Close the streams and releases resources
      *
      * @throws IOException If an I/O error occurs
+     * @see java.io.Writer#close()
      */
     @Override
     public void close() throws IOException {

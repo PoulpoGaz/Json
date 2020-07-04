@@ -27,6 +27,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      * Creates a new {@code JsonArray}
      *
      * @param initialCapacity the initial capacity for this array
+     * @see ArrayList#ArrayList(int)
      */
     public JsonArray(int initialCapacity) {
         delegate = new ArrayList<>(initialCapacity);
@@ -34,6 +35,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
 
     /**
      * Creates a new {@code JsonObject}
+     * @see ArrayList#ArrayList()
      */
     public JsonArray() {
         delegate = new ArrayList<>();
@@ -73,6 +75,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      * Adds the specified value to the list.
      *
      * @param element the value to add
+     * @see ArrayList#add(Object)
      */
     public void add(JsonElement element) {
         delegate.add(Objects.requireNonNull(element));
@@ -83,6 +86,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *
      * @param  index index of the element to return
      * @return the element at the specified position in this list
+     * @see ArrayList#get(int)
      */
     public JsonElement get(int index) {
         return delegate.get(index);
@@ -90,6 +94,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
 
     /**
      * @return the number of elements in this list
+     * @see ArrayList#size()
      */
     public int size() {
         return delegate.size();
@@ -212,6 +217,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
         return false;
     }
 
+    /**
+     * @return an iterator over the elements in this list in proper sequence
+     * @see ArrayList#iterator()
+     */
     @Override
     public Iterator<JsonElement> iterator() {
         return delegate.iterator();
