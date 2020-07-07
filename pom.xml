@@ -6,7 +6,7 @@
 
     <groupId>fr.poulpogaz</groupId>
     <artifactId>json</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>json</name>
     <description>A json reader and writer</description>
