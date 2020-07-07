@@ -3,14 +3,13 @@ package fr.poulpogaz.json.scope;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A base class for checking syntax while
+ * reading a json stream
+ *
  * @author PoulpoGaz
  * @version 1.0
  */
 public abstract class JsonReadScope {
-
-    public static JsonReadScope createRootContext() {
-        return new RootReadScope();
-    }
 
     public static final int STATE_EMPTY = 0;
     public static final int STATE_EXPECT_KEY = 1;
@@ -20,11 +19,12 @@ public abstract class JsonReadScope {
     public static final int STATE_END = 5;
 
     protected final JsonReadScope parent;
+
     protected int state;
 
-    public JsonReadScope(JsonReadScope parent, int state) {
+    public JsonReadScope(JsonReadScope parent) {
         this.parent = parent;
-        this.state = state;
+        this.state = STATE_EMPTY;
     }
 
     public JsonReadScope createObjectScope() throws JsonException {

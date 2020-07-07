@@ -93,7 +93,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonNumber} associated with the specified key
-     *          or {@ocde null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exits, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonNumber getAsJsonNumber(String key) {
@@ -111,7 +111,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonString} associated with the specified key
-     *          or {@ocde null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exits, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonString getAsJsonString(String key) {
@@ -129,7 +129,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonBoolean} associated with the specified key
-     *          or {@ocde null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exits, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonBoolean getAsJsonBoolean(String key) {
@@ -147,7 +147,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonNull} associated with the specified key
-     *          or {@ocde null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exits, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonNull getAsJsonNull(String key) {
@@ -165,7 +165,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonObject} associated with the specified key
-     *          or {@ocde null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exits, or if the value
      *          isn't a {@link JsonObject}
      */
     public JsonObject getAsObject(String key) {

@@ -3,6 +3,9 @@ package fr.poulpogaz.json.number;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A base class for checking syntax
+ * while parsing a number
+ *
  * @author PoulpoGaz
  * @version 1.0
  */

@@ -3,13 +3,17 @@ package fr.poulpogaz.json.scope;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A class for checking syntax in the
+ * first scope while reading a json
+ * stream
+ *
  * @author PoulpoGaz
  * @version 1.0
  */
 public class RootReadScope extends JsonReadScope {
 
     public RootReadScope() {
-        super(null, STATE_EMPTY);
+        super(null);
     }
 
     @Override

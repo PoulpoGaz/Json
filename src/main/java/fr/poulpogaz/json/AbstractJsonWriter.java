@@ -1,6 +1,7 @@
 package fr.poulpogaz.json;
 
 import fr.poulpogaz.json.scope.JsonWriteScope;
+import fr.poulpogaz.json.scope.RootWriteScope;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,7 +43,7 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     public AbstractJsonWriter(Writer out) {
         this.out = out;
 
-        scope = JsonWriteScope.createRootContext();
+        scope = new RootWriteScope();
     }
 
     /**

@@ -130,7 +130,7 @@ public class JsonTreeWriter {
     /**
      * Writes the specified {@link JsonElement}
      *
-     * @implNote
+     * Note:
      * This method close the stream contrary to the
      * {@link #writeImpl(JsonElement, IJsonWriter)} method
      *
@@ -147,7 +147,7 @@ public class JsonTreeWriter {
     /**
      * Writes the specified {@link JsonObject}
      *
-     * @implNote
+     * Note:
      * This method close the stream contrary to the
      * {@link #writeImpl(JsonObject, IJsonWriter)} method
      *
@@ -164,7 +164,7 @@ public class JsonTreeWriter {
     /**
      * Writes the specified {@link JsonArray}
      *
-     * @implNote
+     * Note:
      * This method close the stream contrary to the
      * {@link #writeImpl(JsonArray, IJsonWriter)} method
      *
@@ -181,7 +181,7 @@ public class JsonTreeWriter {
     /**
      * Writes the specified {@link JsonValue}
      *
-     * @implNote
+     * Note:
      * This method close the stream contrary to the
      * {@link #writeImpl(JsonValue, IJsonWriter)} method
      *
@@ -198,7 +198,7 @@ public class JsonTreeWriter {
     /**
      * Writes the specified {@link JsonElement}
      *
-     * @implNote
+     * Note:
      * This method redirects to {@link #writeImpl(JsonObject, IJsonWriter)
      * or {@link #writeImpl(JsonArray, IJsonWriter)} or {@link #writeImpl(JsonObject, IJsonWriter)}
      * depending of the type of the specified element

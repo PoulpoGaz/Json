@@ -3,6 +3,10 @@ package fr.poulpogaz.json.number;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A class that verify syntax while
+ * parsing the exponent part in a
+ * number
+ *
  * @author PoulpoGaz
  * @version 1.0
  */

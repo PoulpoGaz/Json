@@ -3,6 +3,9 @@ package fr.poulpogaz.json.number;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A helper class which get information
+ * about a number while parsing it
+ *
  * @author PoulpoGaz
  * @version 1.0
  */

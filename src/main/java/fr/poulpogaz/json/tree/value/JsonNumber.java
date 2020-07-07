@@ -27,6 +27,7 @@ public class JsonNumber extends JsonValue {
     /**
      * Constructs a new {@code JsonNumber} with the
      * specified value, which may not be {@code null}
+     * @param number the value of this {@code JsonNumber}
      */
     public JsonNumber(Number number) {
         this.number = Objects.requireNonNull(number);

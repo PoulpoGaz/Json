@@ -162,7 +162,7 @@ public interface IJsonReader {
 
     /**
      * Consumes the next token, asserts that it isn't {@link JsonToken#END_TOKEN}
-     * and returns the token and his value, if it exists, in a {@link Pair>}
+     * and returns the token and his value, if it exists, in a {@link Pair}
      *
      * @return the next token and his value, if it exists, in a {@link Pair}
      * @throws IOException If an I/O error occurs

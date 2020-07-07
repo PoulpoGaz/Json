@@ -3,13 +3,16 @@ package fr.poulpogaz.json.scope;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A class for checking syntax in an
+ * array while reading a json stream
+ *
  * @author PoulpoGaz
  * @version 1.0
  */
 public class ArrayReadScope extends JsonReadScope {
 
     public ArrayReadScope(JsonReadScope parent) {
-        super(parent, STATE_EMPTY);
+        super(parent);
     }
 
     @Override

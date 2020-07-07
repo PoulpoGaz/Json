@@ -1,6 +1,7 @@
 package fr.poulpogaz.json;
 
 import fr.poulpogaz.json.scope.JsonReadScope;
+import fr.poulpogaz.json.scope.RootReadScope;
 import fr.poulpogaz.json.utils.Pair;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     public AbstractJsonReader(Reader in) {
         this.in = in;
 
-        scope = JsonReadScope.createRootContext();
+        scope = new RootReadScope();
     }
 
     /**
@@ -388,7 +389,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
     /**
      * Consumes the next token, asserts that it isn't {@link JsonToken#END_TOKEN}
-     * and returns the token and his value, if it exists, in a {@link Pair>}
+     * and returns the token and his value, if it exists, in a {@link Pair}
      *
      * @return the next token and his value, if it exists, in a {@link Pair}
      * @throws IOException If an I/O error occurs

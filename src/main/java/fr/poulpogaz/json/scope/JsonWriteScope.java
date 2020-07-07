@@ -3,14 +3,13 @@ package fr.poulpogaz.json.scope;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A base class for checking syntax while
+ * writing
+ *
  * @author PoulpoGaz
  * @version 1.0
  */
 public abstract class JsonWriteScope {
-
-    public static JsonWriteScope createRootContext() {
-        return new RootWriteScope();
-    }
 
     public static final int STATE_EMPTY = 0;
     public static final int STATE_EXPECT_VALUE = 1;

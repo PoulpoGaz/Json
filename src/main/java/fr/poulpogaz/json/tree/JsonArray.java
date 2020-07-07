@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * A class that represents a json array.
  *
- * @implNote
+ * Note:
  * This class doesn't override the {@link ArrayList}
  * to avoid {@code null}
  *

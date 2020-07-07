@@ -55,7 +55,7 @@ public class JsonTreeReader {
      * creates his equivalent representation as a
      * tree of {@link JsonElement}
      *
-     * @implNote 
+     * Note:
      * This method close the stream contrary to the
      * {@link #readImpl(IJsonReader)} method
      * 

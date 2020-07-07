@@ -3,6 +3,9 @@ package fr.poulpogaz.json.scope;
 import fr.poulpogaz.json.JsonException;
 
 /**
+ * A class for checking syntax in the
+ * first scope while writing.
+ *
  * @author PoulpoGaz
  * @version 1.0
  */

@@ -14,19 +14,20 @@ import java.util.Objects;
  */
 public class JsonString extends JsonValue {
 
-    /** The value of this {@code JsonString}**/
+    /** The value of this {@code JsonString} **/
     private final String value;
 
     /**
-     * Constructs a new {@code JsonNumber} with an empty {@link String}
+     * Constructs a new {@code JsonString} with an empty {@link String}
      */
     public JsonString() {
         value = "";
     }
-    /**
-     * Constructs a new {@code JsonNumber} with te specified {@link String}
-     */
 
+    /**
+     * Constructs a new {@code JsonString} with te specified {@link String}
+     * @param value the value of this {@code JsonString}
+     */
     public JsonString(String value) {
         this.value = Objects.requireNonNull(value);
     }
