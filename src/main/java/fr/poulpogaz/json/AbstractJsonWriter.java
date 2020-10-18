@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * of {@link IJsonWriter}
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.0.1
  */
 public abstract class AbstractJsonWriter implements IJsonWriter {
 
@@ -302,28 +302,14 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
             char c = str.charAt(i);
 
             switch (c) {
-                case '"':
-                    builder.append("\\\"");
-                    break;
-                case '\\':
-                    builder.append("\\\\");
-                case '\n':
-                    builder.append("\\n");
-                    break;
-                case '\t':
-                    builder.append("\\t");
-                    break;
-                case '\r':
-                    builder.append("\\r");
-                    break;
-                case '\b':
-                    builder.append("\\b");
-                    break;
-                case '\f':
-                    builder.append("\\f");
-                default:
-                    builder.append(c);
-                    break;
+                case '"' -> builder.append("\\\"");
+                case '\\' -> builder.append("\\\\");
+                case '\n' -> builder.append("\\n");
+                case '\t' -> builder.append("\\t");
+                case '\r' -> builder.append("\\r");
+                case '\b' -> builder.append("\\b");
+                case '\f' -> builder.append("\\f");
+                default -> builder.append(c);
             }
         }
 

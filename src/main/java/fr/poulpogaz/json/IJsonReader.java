@@ -10,7 +10,7 @@ import java.math.BigInteger;
  * A base class that defines methods for reading json files
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.0.1
  */
 public interface IJsonReader {
 
@@ -351,6 +351,24 @@ public interface IJsonReader {
      * @throws JsonException IF there is a syntax problem or if end of file is reached
      */
     IJsonReader skipField() throws IOException, JsonException;
+
+    /**
+     * Checks if the next key is the specified else throws an exception
+     *
+     * @param expectedKey the expected key
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem, if end of file is reached or if the key isn't the expected key
+     */
+    default IJsonReader assertKeyEquals(String expectedKey) throws IOException, JsonException {
+        String key = nextKey();
+
+        if (!key.equals(expectedKey)) {
+            throw new JsonException(String.format("Invalid key. Expected \"%s\" but was \"%s\"", expectedKey, key));
+        }
+
+        return this;
+    }
 
     /**
      * Close the streams and releases resources
