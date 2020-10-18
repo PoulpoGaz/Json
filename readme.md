@@ -116,12 +116,12 @@ This library doesn't support data binding.
 
 ### Maven
 
-json is now available at maven central.
+json is available at maven central.
 
 ```xml
 <dependency>
     <groupId>io.github.poulpogaz</groupId>
     <artifactId>json</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
