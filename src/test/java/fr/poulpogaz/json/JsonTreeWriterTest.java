@@ -7,6 +7,7 @@ import fr.poulpogaz.json.tree.JsonValue;
 import fr.poulpogaz.json.tree.value.JsonString;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -16,7 +17,7 @@ import java.nio.file.Path;
  * Test class for the {@link JsonTreeWriter} class
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.1
  */
 public class JsonTreeWriterTest {
 
@@ -66,10 +67,11 @@ public class JsonTreeWriterTest {
     @Test
     void writeObject() throws IOException, JsonException {
         JsonObject object = createObject();
-
         object.put("array", createArray());
 
-        JsonTreeWriter.write(object, new JsonPrettyWriter(Files.newBufferedWriter(Path.of("src/test/json_tree_writer_test_object.json"))));
+        Path path = Path.of("src/test/json_tree_writer_test_object.json");
+        BufferedWriter bw = Files.newBufferedWriter(path);
+        JsonTreeWriter.write(object, new JsonPrettyWriter(bw));
     }
 
     @Test
@@ -78,13 +80,17 @@ public class JsonTreeWriterTest {
         array.add(createObject());
         array.add(createArray());
 
-        JsonTreeWriter.write(array, new JsonPrettyWriter(Files.newBufferedWriter(Path.of("src/test/json_tree_writer_test_array.json"))));
+        Path path = Path.of("src/test/json_tree_writer_test_array.json");
+        BufferedWriter bw = Files.newBufferedWriter(path);
+        JsonTreeWriter.write(array, new JsonPrettyWriter(bw));
     }
 
     @Test
     void writeValue() throws IOException, JsonException {
         JsonValue value = new JsonString("hello world");
 
-        JsonTreeWriter.write(value, new JsonPrettyWriter(Files.newBufferedWriter(Path.of("src/test/json_tree_writer_test_value.json"))));
+        Path path = Path.of("src/test/json_tree_writer_test_value.json");
+        BufferedWriter bw = Files.newBufferedWriter(path);
+        JsonTreeWriter.write(value, new JsonPrettyWriter(bw));
     }
 }

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for the {@link JsonTreeReader} class
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.1
  */
 public class JsonTreeReaderTest {
 
@@ -31,19 +31,19 @@ public class JsonTreeReaderTest {
 
         JsonObject object = (JsonObject) element;
         assertNotNull(object.get("a"));
-        assertEquals(object.get("a").getAsString(), "b");
+        assertEquals(object.getAsString("a"), "b");
 
         assertNotNull(object.get("c"));
-        assertEquals(object.get("c").getAsString(), "d");
+        assertEquals(object.getAsString("c"), "d");
 
         assertNotNull(object.get("e"));
-        assertEquals(object.get("e").getAsInt(), 0);
+        assertEquals(object.getAsInt("e"), 0);
 
         assertNotNull(object.get("f"));
-        assertEquals(object.get("f").getAsBigDecimal(), new BigDecimal("46.43e-40"));
+        assertEquals(object.getAsBigDecimal("f"), new BigDecimal("46.43e-40"));
 
         assertNotNull(object.get("g"));
-        assertEquals(object.get("g").getAsInt(), 50);
+        assertEquals(object.getAsInt("g"), 50);
 
         assertNotNull(object.get("h"));
         assertTrue(object.get("h").isNull());
@@ -57,10 +57,10 @@ public class JsonTreeReaderTest {
         JsonObject object1 = array.getAsObject(2);
 
         assertNotNull(object1.get("g"));
-        assertTrue(object1.getAsJsonBoolean("g").getAsBoolean());
+        assertTrue(object1.getAsBoolean("g"));
 
         assertNotNull(object1.get("h"));
-        assertFalse(object1.getAsJsonBoolean("h").getAsBoolean());
+        assertFalse(object1.getAsBoolean("h"));
 
         assertNotNull(object1.get("i"));
         assertTrue(object1.getAsJsonNull("i").isNull());

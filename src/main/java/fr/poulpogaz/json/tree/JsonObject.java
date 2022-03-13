@@ -102,7 +102,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonNumber getAsJsonNumber(String key) {
         JsonElement element = get(key);
 
-        return element.isNumber() ? (JsonNumber) element : null;
+        return element != null && element.isNumber() ? (JsonNumber) element : null;
     }
 
     /**
@@ -114,7 +114,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonString getAsJsonString(String key) {
         JsonElement element = get(key);
 
-        return element.isString() ? (JsonString) element : null;
+        return element != null && element.isString() ? (JsonString) element : null;
     }
 
     /**
@@ -126,7 +126,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonBoolean getAsJsonBoolean(String key) {
         JsonElement element = get(key);
 
-        return element.isBoolean() ? (JsonBoolean) element : null;
+        return element != null && element.isBoolean() ? (JsonBoolean) element : null;
     }
 
     /**
@@ -138,7 +138,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonNull getAsJsonNull(String key) {
         JsonElement element = get(key);
 
-        return element.isNull() ? (JsonNull) element : null;
+        return element != null && element.isNull() ? (JsonNull) element : null;
     }
 
     /**
@@ -150,7 +150,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonObject getAsObject(String key) {
         JsonElement element = get(key);
 
-        return element.isObject() ? (JsonObject) element : null;
+        return element != null && element.isObject() ? (JsonObject) element : null;
     }
 
     /**
@@ -162,7 +162,7 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     public JsonArray getAsArray(String key) {
         JsonElement element = get(key);
 
-        return element.isArray() ? (JsonArray) element : null;
+        return element != null && element.isArray() ? (JsonArray) element : null;
     }
 
     /**

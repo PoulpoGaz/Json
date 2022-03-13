@@ -117,6 +117,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          not a {@link JsonNumber}
      */
     public JsonNumber getAsJsonNumber(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isNumber() ? (JsonNumber) element : null;
@@ -129,6 +133,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          not a {@link JsonString}
      */
     public JsonString getAsJsonString(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isString() ? (JsonString) element : null;
@@ -141,6 +149,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          not a {@link JsonBoolean}
      */
     public JsonBoolean getAsJsonBoolean(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isBoolean() ? (JsonBoolean) element : null;
@@ -153,6 +165,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          not a {@link JsonNull}
      */
     public JsonNull getAsJsonNull(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isNull() ? (JsonNull) element : null;
@@ -164,6 +180,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          or {@code null} if the element is not an object
      */
     public JsonObject getAsObject(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isObject() ? (JsonObject) element : null;
@@ -175,6 +195,10 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      *          or {@code null} if the element is not an array
      */
     public JsonArray getAsArray(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return null;
+        }
+
         JsonElement element = get(index);
 
         return element.isArray() ? (JsonArray) element : null;
@@ -615,7 +639,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      */
     @Override
     public boolean isObject() {
-        return true;
+        return false;
     }
 
     /**
