@@ -96,97 +96,439 @@ public class JsonObject extends HashMap<String, JsonElement> implements JsonElem
     /**
      * @param key the specified key
      * @return the {@link JsonNumber} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonNumber getAsJsonNumber(String key) {
         JsonElement element = get(key);
 
-        if (element == null) {
-            return null;
-        } else if (element.isValue()) {
-            return ((JsonValue) element).isNumber() ? (JsonNumber) element : null;
-        } else {
-            return null;
-        }
+        return element.isNumber() ? (JsonNumber) element : null;
     }
 
     /**
      * @param key the specified key
      * @return the {@link JsonString} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonString getAsJsonString(String key) {
         JsonElement element = get(key);
 
-        if (element == null) {
-            return null;
-        } else if (element.isValue()) {
-            return ((JsonValue) element).isString() ? (JsonString) element : null;
-        } else {
-            return null;
-        }
+        return element.isString() ? (JsonString) element : null;
     }
 
     /**
      * @param key the specified key
      * @return the {@link JsonBoolean} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonBoolean getAsJsonBoolean(String key) {
         JsonElement element = get(key);
 
-        if (element == null) {
-            return null;
-        } else if (element.isValue()) {
-            return ((JsonValue) element).isBoolean() ? (JsonBoolean) element : null;
-        } else {
-            return null;
-        }
+        return element.isBoolean() ? (JsonBoolean) element : null;
     }
 
     /**
      * @param key the specified key
      * @return the {@link JsonNull} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonValue}
      */
     public JsonNull getAsJsonNull(String key) {
         JsonElement element = get(key);
 
-        if (element == null) {
-            return null;
-        } else if (element.isValue()) {
-            return ((JsonValue) element).isNull() ? (JsonNull) element : null;
-        } else {
-            return null;
-        }
+        return element.isNull() ? (JsonNull) element : null;
     }
 
     /**
      * @param key the specified key
      * @return the {@link JsonObject} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonObject}
      */
     public JsonObject getAsObject(String key) {
         JsonElement element = get(key);
 
-        return element == null ? null : element.isObject() ? (JsonObject) element : null;
+        return element.isObject() ? (JsonObject) element : null;
     }
 
     /**
      * @param key the specified key
      * @return the {@link JsonArray} associated with the specified key
-     *          or {@code null} if the key doesn't exits, or if the value
+     *          or {@code null} if the key doesn't exist, or if the value
      *          isn't a {@link JsonArray}
      */
     public JsonArray getAsArray(String key) {
         JsonElement element = get(key);
 
-        return element == null ? null : element.isArray() ? (JsonArray) element : null;
+        return element.isArray() ? (JsonArray) element : null;
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonNumber} associated with the specified key
+     * or an empty {@link Optional} if the key doesn't exist, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonNumber> getOptionalJsonNumber(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isNumber()) {
+            return Optional.of((JsonNumber) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonString} associated with the specified key
+     * or an empty {@link Optional} if the key doesn't exist, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonString> getOptionalJsonString(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isString()) {
+            return Optional.of((JsonString) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonBoolean} associated with the specified key
+     * or an empty {@link Optional} if the key doesn't exist, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonBoolean> getOptionalJsonBoolean(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isBoolean()) {
+            return Optional.of((JsonBoolean) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonNull} associated with the specified key
+     *  or an empty {@link Optional} if the key doesn't exist, or if the value
+     *  isn't a {@link JsonValue}
+     */
+    public Optional<JsonNull> getOptionalJsonNull(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isNull()) {
+            return Optional.of((JsonNull) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonObject} associated with the specified key
+     * or an empty {@link Optional} if the key doesn't exist, or if the value
+     * isn't a {@link JsonObject}
+     */
+    public Optional<JsonObject> getOptionalJsonObject(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isObject()) {
+            return Optional.of((JsonObject) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing {@link JsonArray} associated with the specified key
+     * or an empty {@link Optional} if the key doesn't exist, or if the value
+     * isn't a {@link JsonArray}
+     */
+    public Optional<JsonArray> getOptionalJsonArray(String key) {
+        JsonElement element = get(key);
+
+        if (element != null && element.isArray()) {
+            return Optional.of((JsonArray) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code byte} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code byte}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public byte getAsByte(String key) {
+        return get(key).getAsByte();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code short} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code short}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public short getAsShort(String key) {
+        return get(key).getAsShort();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code int} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code int}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public int getAsInt(String key) {
+        return get(key).getAsInt();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code long} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code long}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public long getAsLong(String key) {
+        return get(key).getAsLong();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@link BigInteger} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link BigInteger}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public BigInteger getAsBigInteger(String key) {
+        return get(key).getAsBigInteger();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code float} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code float}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public float getAsFloat(String key) {
+        return get(key).getAsFloat();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code double} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code double}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public double getAsDouble(String key) {
+        return get(key).getAsDouble();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@link BigDecimal} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link BigDecimal}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public BigDecimal getAsBigDecimal(String key) {
+        return get(key).getAsBigDecimal();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@link String} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link String}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public String getAsString(String key) {
+        return get(key).getAsString();
+    }
+
+    /**
+     * @param key the specified key
+     * @return the value associated with the specified key as {@code boolean} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code boolean}
+     * @throws NullPointerException if there is not {@link JsonElement} associated with the key
+     */
+    public boolean getAsBoolean(String key) {
+        return get(key).getAsBoolean();
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code byte}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a byte
+     */
+    public Optional<Byte> getOptionalByte(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalByte();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code short}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code short}
+     */
+    public Optional<Short> getOptionalShort(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalShort();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code int}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code int}
+     */
+    public Optional<Integer> getOptionalInt(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalInt();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code long}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code long}
+     */
+    public Optional<Long> getOptionalLong(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalLong();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@link BigInteger}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@link BigInteger}
+     */
+    public Optional<BigInteger> getOptionalBigInteger(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalBigInteger();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code float}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code float}
+     */
+    public Optional<Float> getOptionalFloat(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalFloat();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code double}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code double}
+     */
+    public Optional<Double> getOptionalDouble(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalDouble();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@link BigDecimal}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@link BigDecimal}
+     */
+    public Optional<BigDecimal> getOptionalBigDecimal(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalBigDecimal();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@link String}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@link String}
+     */
+    public Optional<String> getOptionalString(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalString();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param key the specified key
+     * @return an {@link Optional} describing the value associated with the specified key as {@code boolean}
+     * or an empty {@link Optional} if there is no value associated with the key or if the json element
+     * is not a {@code boolean}
+     */
+    public Optional<Boolean> getOptionalBoolean(String key) {
+        JsonElement e = get(key);
+
+        if (e != null) {
+            return e.optionalBoolean();
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**

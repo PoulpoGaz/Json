@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public final class JsonNull extends JsonValue {
 
-    /** A constant representing the null value**/
+    /** A constant representing the null value **/
     public static final JsonNull INSTANCE = new JsonNull();
 
     /**

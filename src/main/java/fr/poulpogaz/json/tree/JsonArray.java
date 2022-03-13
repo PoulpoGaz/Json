@@ -119,11 +119,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
     public JsonNumber getAsJsonNumber(int index) {
         JsonElement element = get(index);
 
-        if (element.isValue()) {
-            return ((JsonValue) element).isNumber() ? (JsonNumber) element : null;
-        } else {
-            return null;
-        }
+        return element.isNumber() ? (JsonNumber) element : null;
     }
 
     /**
@@ -135,11 +131,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
     public JsonString getAsJsonString(int index) {
         JsonElement element = get(index);
 
-        if (element.isValue()) {
-            return ((JsonValue) element).isString() ? (JsonString) element : null;
-        } else {
-            return null;
-        }
+        return element.isString() ? (JsonString) element : null;
     }
 
     /**
@@ -151,11 +143,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
     public JsonBoolean getAsJsonBoolean(int index) {
         JsonElement element = get(index);
 
-        if (element.isValue()) {
-            return ((JsonValue) element).isBoolean() ? (JsonBoolean) element : null;
-        } else {
-            return null;
-        }
+        return element.isBoolean() ? (JsonBoolean) element : null;
     }
 
     /**
@@ -167,17 +155,13 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
     public JsonNull getAsJsonNull(int index) {
         JsonElement element = get(index);
 
-        if (element.isValue()) {
-            return element.isNull() ? (JsonNull) element : null;
-        } else {
-            return null;
-        }
+        return element.isNull() ? (JsonNull) element : null;
     }
 
     /**
      * @param index index of the element to return
      * @return the {@link JsonObject} at the specified position in this list,
-     *          or {@code null} if the element is not a object
+     *          or {@code null} if the element is not an object
      */
     public JsonObject getAsObject(int index) {
         JsonElement element = get(index);
@@ -196,6 +180,436 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
         return element.isArray() ? (JsonArray) element : null;
     }
 
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonNumber} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonNumber> getOptionalJsonNumber(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element.isNumber()) {
+            return Optional.of((JsonNumber) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonString} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonString> getOptionalJsonString(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element != null && element.isString()) {
+            return Optional.of((JsonString) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonBoolean} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonBoolean> getOptionalJsonBoolean(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element != null && element.isBoolean()) {
+            return Optional.of((JsonBoolean) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonNull} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonNull> getOptionalJsonNull(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element != null && element.isNull()) {
+            return Optional.of((JsonNull) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonObject} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonObject> getOptionalJsonObject(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element != null && element.isObject()) {
+            return Optional.of((JsonObject) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing {@link JsonArray} at the specified position
+     * in this list, or an empty {@link Optional} if the index is out of range, or if the value
+     * isn't a {@link JsonValue}
+     */
+    public Optional<JsonArray> getOptionalJsonArray(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement element = get(index);
+
+        if (element != null && element.isArray()) {
+            return Optional.of((JsonArray) element);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code byte} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code byte}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public byte getAsByte(int index) {
+        return get(index).getAsByte();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code short} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code short}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public short getAsShort(int index) {
+        return get(index).getAsShort();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code int} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code int}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public int getAsInt(int index) {
+        return get(index).getAsInt();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code long} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code long}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public long getAsLong(int index) {
+        return get(index).getAsLong();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@link BigInteger} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link BigInteger}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public BigInteger getAsBigInteger(int index) {
+        return get(index).getAsBigInteger();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code float} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code float}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public float getAsFloat(int index) {
+        return get(index).getAsFloat();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code double} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code double}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public double getAsDouble(int index) {
+        return get(index).getAsDouble();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@link BigDecimal} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link BigDecimal}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public BigDecimal getAsBigDecimal(int index) {
+        return get(index).getAsBigDecimal();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@link String} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@link String}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public String getAsString(int index) {
+        return get(index).getAsString();
+    }
+
+    /**
+     * @param index index of the element
+     * @return the value at the specified index as {@code boolean} if possible
+     * @throws IllegalStateException the value isn't a {@link JsonValue}
+     * @throws NumberFormatException the value can't be parsed to a {@code boolean}
+     * @throws IndexOutOfBoundsException the index is out of range
+     */
+    public boolean getAsBoolean(int index) {
+        return get(index).getAsBoolean();
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code byte}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code byte}
+     */
+    public Optional<Byte> getOptionalByte(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalByte();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code short}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code short}
+     */
+    public Optional<Short> getOptionalShort(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalShort();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code int}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code int}
+     */
+    public Optional<Integer> getOptionalInt(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalInt();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code long}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code long}
+     */
+    public Optional<Long> getOptionalLong(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalLong();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@link BigInteger}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@link BigInteger}
+     */
+    public Optional<BigInteger> getOptionalBigInteger(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalBigInteger();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code float}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code float}
+     */
+    public Optional<Float> getOptionalFloat(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalFloat();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code double}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code double}
+     */
+    public Optional<Double> getOptionalDouble(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalDouble();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@link BigDecimal}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@link BigDecimal}
+     */
+    public Optional<BigDecimal> getOptionalBigDecimal(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalBigDecimal();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@link String}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@link String}
+     */
+    public Optional<String> getOptionalString(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalString();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @param index index of the element
+     * @return an {@link Optional} describing the value at the specified index as {@code boolean}
+     * or an empty {@link Optional} if the index is out of range or if the json element
+     * is not a {@code boolean}
+     */
+    public Optional<Boolean> getOptionalBoolean(int index) {
+        if (index < 0 || index >= delegate.size()) {
+            return Optional.empty();
+        }
+
+        JsonElement e = get(index);
+
+        if (e != null) {
+            return e.optionalBoolean();
+        } else {
+            return Optional.empty();
+        }
+    }
+    
     /**
      * @return true if this {@code JsonElement} is a {@link JsonObject}
      */
