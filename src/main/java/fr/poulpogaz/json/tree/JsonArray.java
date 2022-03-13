@@ -623,7 +623,7 @@ public class JsonArray implements JsonElement, Iterable<JsonElement> {
      */
     @Override
     public boolean isArray() {
-        return false;
+        return true;
     }
 
     /**

@@ -228,7 +228,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
 
     /**
      * Writes the field separator: {@code ": "}
-     * or {@code ':'} depending of the size of the indentation
+     * or {@code ':'} depending on the size of the indentation
      *
      * @throws IOException If an I/O error occurs
      */

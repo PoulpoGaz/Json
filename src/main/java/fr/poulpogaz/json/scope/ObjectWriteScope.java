@@ -54,7 +54,7 @@ public class ObjectWriteScope extends JsonWriteScope {
             state = STATE_END;
             return parent;
         } else if (state == STATE_EXPECT_VALUE) {
-            throw new JsonException("Cannot close if a valueis expected");
+            throw new JsonException("Cannot close if a value is expected");
         } else {
             throw new JsonException("Nesting problem");
         }

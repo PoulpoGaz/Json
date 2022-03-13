@@ -31,22 +31,22 @@ public class JsonTreeReaderTest {
 
         JsonObject object = (JsonObject) element;
         assertNotNull(object.get("a"));
-        assertEquals(((JsonValue) object.get("a")).getAsString(), "b");
+        assertEquals(object.get("a").getAsString(), "b");
 
         assertNotNull(object.get("c"));
-        assertEquals(((JsonValue) object.get("c")).getAsString(), "d");
+        assertEquals(object.get("c").getAsString(), "d");
 
         assertNotNull(object.get("e"));
-        assertEquals(((JsonValue) object.get("e")).getAsInt(), 0);
+        assertEquals(object.get("e").getAsInt(), 0);
 
         assertNotNull(object.get("f"));
-        assertEquals(((JsonValue) object.get("f")).getAsBigDecimal(), new BigDecimal("46.43e-40"));
+        assertEquals(object.get("f").getAsBigDecimal(), new BigDecimal("46.43e-40"));
 
         assertNotNull(object.get("g"));
-        assertEquals(((JsonValue) object.get("g")).getAsInt(), 50);
+        assertEquals(object.get("g").getAsInt(), 50);
 
         assertNotNull(object.get("h"));
-        assertTrue(((JsonValue) object.get("h")).isNull());
+        assertTrue(object.get("h").isNull());
 
         assertNotNull(object.get("i"));
         JsonArray array = object.getAsArray("i");

@@ -13,7 +13,7 @@ import fr.poulpogaz.json.JsonException;
 public class FractionScope extends JsonNumberScope {
 
     @Override
-    public void newDigit(char digit) throws JsonException {
+    public void newDigit(char digit) {
         state = STATE_EXPECT_DIGIT_OR_CLOSE;
     }
 

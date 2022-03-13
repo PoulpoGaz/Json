@@ -194,7 +194,7 @@ public class JsonReader extends AbstractJsonReader {
      * time, we check the syntax with the {@link NumberHelper} class/
      * Then, if the number is a decimal number, we just return
      * a {@link BigDecimal} object, else we try to parse it to a {@code int}
-     * or a [@code long} or a {@link BigInteger} depending of the length of
+     * or a {@code long} or a {@link BigInteger} depending on the length of
      * the number
      *
      * @return the parsed number
@@ -253,7 +253,7 @@ public class JsonReader extends AbstractJsonReader {
                     long l = Long.parseLong(builder.toString());
 
                     if ((int) l == l) {
-                        return (int) l; // important casting, used for setting set correct token
+                        return (int) l; // important casting, used for setting the correct token
                     } else {
                         return l;
                     }
@@ -295,7 +295,7 @@ public class JsonReader extends AbstractJsonReader {
      * Utility method for {@link #parseNumber()} which determines if the
      * number to parse is an integer or a decimal number
      *
-     * @param helper the helper class that contains use full information
+     * @param helper the helper class that contains useful information
      * @return true if the number is an integer
      * @see NumberHelper
      */
@@ -385,7 +385,7 @@ public class JsonReader extends AbstractJsonReader {
                     case 'r' -> builder.append('\r');
                     case 't' -> builder.append('\t');
                     case 'u' -> builder.append(parseHex());
-                    default -> throw new JsonException("Unknown escape character: " + next + " (bytes: " + (byte) +next + ")");
+                    default -> throw new JsonException("Unknown escape character: " + next + " (bytes: " + (byte) next + ")");
                 }
             } else if (c == '"') {
                 break;

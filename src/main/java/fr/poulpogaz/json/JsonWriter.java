@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 /**
- * A json writer. It doesn't writes json with
+ * A json writer. It doesn't write json with
  * indentation, spaces, etc.
  *
  * @author PoulpoGaz

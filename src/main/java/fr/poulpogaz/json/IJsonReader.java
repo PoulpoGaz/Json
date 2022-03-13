@@ -314,7 +314,7 @@ public interface IJsonReader {
     boolean hasNextBoolean() throws IOException, JsonException;
 
     /**
-     * Peeks the next token and returns true if the next token is't {@link JsonToken#END_TOKEN}
+     * Peeks the next token and returns true if the next token isn't {@link JsonToken#END_TOKEN}
      *
      * @return {@code true} if the next token is {@link JsonToken#BEGIN_ARRAY_TOKEN}
      *              else {@code false}
@@ -325,7 +325,7 @@ public interface IJsonReader {
 
     /**
      * Consumes the next token and asserts that it is {@link JsonToken#KEY_TOKEN},
-     * by using the {@link #nextKey()} methods, but don't returns his value
+     * by using the {@link #nextKey()} methods, but don't return his value
      *
      * @return itself
      * @throws IOException If an I/O error occurs

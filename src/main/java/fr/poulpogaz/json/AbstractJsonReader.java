@@ -34,13 +34,13 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     /** The current token **/
     protected JsonToken currentToken = null;
 
-    /** The value of the current token if the token is a string based token**/
+    /** The value of the current token if the token is a string based token **/
     protected String stringToken;
 
-    /** The value of the current token if the token is a number token**/
+    /** The value of the current token if the token is a number token **/
     protected Number numberToken;
 
-    /** The value of the current token if the token is a s boolean token**/
+    /** The value of the current token if the token is a boolean token **/
     protected boolean booleanToken;
 
     private boolean closed = false;
@@ -79,7 +79,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.BEGIN_OBJECT_TOKEN) {
-            throwException("BEGIN_OBJECT_TOKEN expected, but was " + currentToken, true);
+            thrException("BEGIN_OBJECT_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -99,7 +99,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.END_OBJECT_TOKEN) {
-            throwException("END_OBJECT_TOKEN expected, but was " + currentToken, true);
+            thrException("END_OBJECT_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -119,7 +119,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.BEGIN_ARRAY_TOKEN) {
-            throwException("BEGIN_ARRAY_TOKEN expected, but was " + currentToken, true);
+            thrException("BEGIN_ARRAY_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -139,7 +139,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.END_ARRAY_TOKEN) {
-            throwException("END_ARRAY_TOKEN expected, but was " + currentToken, true);
+            thrException("END_ARRAY_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -160,7 +160,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.KEY_TOKEN) {
-            throwException("KEY_TOKEN expected, but was " + currentToken, true);
+            thrException("KEY_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -181,7 +181,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -202,7 +202,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -223,7 +223,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -244,7 +244,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
 
@@ -266,7 +266,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -295,7 +295,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -320,7 +320,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (!currentToken.isNumber()) {
-            throwException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
+            thrException("INT_TOKEN or FLOAT_TOKEN or LONG_TOKEN or DECIMAL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -341,7 +341,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.STRING_TOKEN) {
-            throwException("STRING_TOKEN expected, but was " + currentToken, true);
+            thrException("STRING_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -360,7 +360,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.NULL_TOKEN) {
-            throwException("NULL_TOKEN expected, but was " + currentToken, true);
+            thrException("NULL_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -379,7 +379,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken != JsonToken.BOOLEAN_TOKEN) {
-            throwException("BOOLEAN_TOKEN expected, but was " + currentToken, true);
+            thrException("BOOLEAN_TOKEN expected, but was " + currentToken, true);
         }
 
         consumeToken();
@@ -400,7 +400,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
         peek();
 
         if (currentToken == JsonToken.END_TOKEN) {
-            throw new JsonException("EOF");
+            thrException("EOF", false);
         }
 
         consumeToken();
@@ -634,7 +634,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
     }
 
     /**
-     * Peeks the next token and returns true if the next token is't {@link JsonToken#END_TOKEN}
+     * Peeks the next token and returns true if the next token isn't {@link JsonToken#END_TOKEN}
      *
      * @return {@code true} if the next token is {@link JsonToken#BEGIN_ARRAY_TOKEN}
      *              else {@code false}
@@ -650,7 +650,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
 
     /**
      * Consumes the next token and asserts that it is {@link JsonToken#KEY_TOKEN},
-     * by using the {@link #nextKey()} methods, but don't returns his value
+     * by using the {@link #nextKey()} methods, but don't return his value
      *
      * @return itself
      * @throws IOException If an I/O error occurs
@@ -694,7 +694,7 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
             endObject();
 
         } else if (!currentToken.isValue()) {
-            throwException("Value token expected, but was " + currentToken, true);
+            thrException("Value token expected, but was " + currentToken, true);
         } else {
             consumeToken();
         }
@@ -760,9 +760,9 @@ public abstract class AbstractJsonReader implements IJsonReader, AutoCloseable {
      * @param showContext if true adds to the message the current json context
      * @throws JsonException throws a {@link JsonException} with specified message
      */
-    protected void throwException(String message, boolean showContext) throws JsonException {
+    protected void thrException(String message, boolean showContext) throws JsonException {
         if (showContext) {
-            throw new JsonException(message + " (in " + scope + ")");
+            throw new JsonException(message + " (in " + scope.getClass().getSimpleName() + ")");
         } else {
             throw new JsonException(message);
         }
