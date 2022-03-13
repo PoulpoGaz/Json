@@ -5,12 +5,13 @@ import fr.poulpogaz.json.tree.JsonValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A class that represent a json string
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.1
  */
 public class JsonString extends JsonValue {
 
@@ -32,6 +33,13 @@ public class JsonString extends JsonValue {
         this.value = Objects.requireNonNull(value);
     }
 
+    /**
+     * @return true as this class represents a json string
+     */
+    @Override
+    public boolean isString() {
+        return true;
+    }
 
     /**
      * Tries to parse this {@code JsonString} as
@@ -155,10 +163,124 @@ public class JsonString extends JsonValue {
     }
 
     /**
-     * @return true as this class represents a json string
+     * @return an {@link Optional} describing a {@code byte},
+     * or an empty {@link Optional} if this json element isn't a {@code byte}
      */
     @Override
-    public boolean isString() {
-        return true;
+    public Optional<Byte> optionalByte() {
+        try {
+            return Optional.of(getAsByte());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code short},
+     * or an empty {@link Optional} if this json element isn't a {@code short}
+     */
+    @Override
+    public Optional<Short> optionalShort() {
+        try {
+            return Optional.of(getAsShort());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code int},
+     * or an empty {@link Optional} if this json element isn't a {@code int}
+     */
+    @Override
+    public Optional<Integer> optionalInt() {
+        try {
+            return Optional.of(getAsInt());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code long},
+     * or an empty {@link Optional} if this json element isn't a {@code long}
+     */
+    @Override
+    public Optional<Long> optionalLong() {
+        try {
+            return Optional.of(getAsLong());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link BigInteger},
+     * or an empty {@link Optional} if this json element isn't a {@link BigInteger}
+     */
+    @Override
+    public Optional<BigInteger> optionalBigInteger() {
+        try {
+            return Optional.of(getAsBigInteger());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code float},
+     * or an empty {@link Optional} if this json element isn't a {@code float}
+     */
+    @Override
+    public Optional<Float> optionalFloat() {
+        try {
+            return Optional.of(getAsFloat());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code double},
+     * or an empty {@link Optional} if this json element isn't a {@code double}
+     */
+    @Override
+    public Optional<Double> optionalDouble() {
+        try {
+            return Optional.of(getAsDouble());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link BigDecimal},
+     * or an empty {@link Optional} if this json element isn't a {@link BigDecimal}
+     */
+    @Override
+    public Optional<BigDecimal> optionalBigDecimal() {
+        try {
+            return Optional.of(getAsBigDecimal());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link String},
+     * or an empty {@link Optional} if this json element isn't a {@link String}
+     */
+    @Override
+    public Optional<String> optionalString() {
+        return Optional.of(getAsString());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code boolean},
+     * or an empty {@link Optional} if this json element isn't a {@code boolean}
+     */
+    @Override
+    public Optional<Boolean> optionalBoolean() {
+        return Optional.of(getAsBoolean());
     }
 }

@@ -35,7 +35,7 @@ String key2 = reader.nextKey();
 BigInteger _42e42_ = reader.nextBigInteger();
 
 String key3 = reader.nextKey();
-boolean _false_ =reader.nextBoolean();
+boolean _false_ = reader.nextBoolean();
 
 reader.skipField(); // You can skip field, value or key
 

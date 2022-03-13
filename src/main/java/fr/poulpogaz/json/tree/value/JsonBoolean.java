@@ -4,14 +4,15 @@ import fr.poulpogaz.json.tree.JsonValue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Optional;
 
 /**
  * A class that represent a json boolean
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.1
  */
-public class JsonBoolean extends JsonValue {
+public final class JsonBoolean extends JsonValue {
 
     /** A constant representing the value true **/
     public static final JsonBoolean TRUE = new JsonBoolean(true);
@@ -41,6 +42,14 @@ public class JsonBoolean extends JsonValue {
      */
     private JsonBoolean(boolean value) {
         this.value = value;
+    }
+
+    /**
+     * @return true as this class represents a json boolean
+     */
+    @Override
+    public boolean isBoolean() {
+        return true;
     }
 
     /**
@@ -142,10 +151,82 @@ public class JsonBoolean extends JsonValue {
     }
 
     /**
-     * @return true as this class represents a json boolean
+     * @return an {@link Optional} describing a {@code byte}
      */
     @Override
-    public boolean isBoolean() {
-        return true;
+    public Optional<Byte> optionalByte() {
+        return Optional.of(getAsByte());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code short}
+     */
+    @Override
+    public Optional<Short> optionalShort() {
+        return Optional.of(getAsShort());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code int}
+     */
+    @Override
+    public Optional<Integer> optionalInt() {
+        return Optional.of(getAsInt());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code long}
+     */
+    @Override
+    public Optional<Long> optionalLong() {
+        return Optional.of(getAsLong());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link BigInteger}
+     */
+    @Override
+    public Optional<BigInteger> optionalBigInteger() {
+        return Optional.of(getAsBigInteger());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code float}
+     */
+    @Override
+    public Optional<Float> optionalFloat() {
+        return Optional.of(getAsFloat());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code double}
+     */
+    @Override
+    public Optional<Double> optionalDouble() {
+        return Optional.of(getAsDouble());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link BigDecimal}
+     */
+    @Override
+    public Optional<BigDecimal> optionalBigDecimal() {
+        return Optional.of(getAsBigDecimal());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@link String}
+     */
+    @Override
+    public Optional<String> optionalString() {
+        return Optional.of(getAsString());
+    }
+
+    /**
+     * @return an {@link Optional} describing a {@code boolean}
+     */
+    @Override
+    public Optional<Boolean> optionalBoolean() {
+        return Optional.of(value);
     }
 }
