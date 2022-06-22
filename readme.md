@@ -122,6 +122,6 @@ json is available at maven central.
 <dependency>
     <groupId>io.github.poulpogaz</groupId>
     <artifactId>json</artifactId>
-    <version>1.0.1</version>
+    <version>1.2</version>
 </dependency>
 ```

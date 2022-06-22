@@ -28,6 +28,9 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     /** Uses {@code "\r\n"} line separator if true else {@code '\n'} **/
     private boolean useWindowsLineSeparator;
 
+    /** When true, a line separator won't be added after a value in an array **/
+    private boolean inlineArray;
+
     /** cache value **/
     private String space;
 
@@ -110,7 +113,13 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         boolean wasArray = scope.isArray();
         scope = scope.createArrayScope();
 
-        if (comma || wasArray) {
+        if (inlineArray) {
+
+            if (comma || wasArray) {
+                out.write(' ');
+            }
+
+        } else if (comma || wasArray) {
             newLine();
         }
 
@@ -131,7 +140,11 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     public IJsonWriter endArray() throws IOException, JsonException {
         scope = scope.close();
         depth--;
-        newLine();
+
+        if (!inlineArray) {
+            newLine();
+        }
+
         out.write(']');
 
         return this;
@@ -168,11 +181,17 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
      */
     @Override
     protected IJsonWriter value(String value, boolean wrap) throws IOException, JsonException {
-        writeCommaIfNeeded();
+        boolean comma = writeCommaIfNeeded();
         scope.newValue();
 
         if (scope.isArray()) {
-            newLine();
+            if (inlineArray) {
+                if (comma) {
+                    out.write(' ');
+                }
+            } else {
+                newLine();
+            }
         }
 
         if (wrap) {
@@ -304,5 +323,21 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         } else {
             lineSeparator = "\n";
         }
+    }
+
+    /**
+     * @return {@code true} if the writer inline arrays
+     */
+    public boolean isInlineArray() {
+        return inlineArray;
+    }
+
+    /**
+     * Combining inline arrays and objects may produce
+     * weird result
+     * @param inlineArray true for inline arrays
+     */
+    public void setInlineArray(boolean inlineArray) {
+        this.inlineArray = inlineArray;
     }
 }

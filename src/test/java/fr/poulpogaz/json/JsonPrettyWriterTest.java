@@ -49,4 +49,50 @@ public class JsonPrettyWriterTest {
 
         writer.close();
     }
+
+    @Test
+    void inlineArray() throws IOException, JsonException {
+        JsonPrettyWriter writer = new JsonPrettyWriter(Files.newBufferedWriter(Path.of("src/test/json_pretty_writer_test_inline.json")));
+        writer.setInlineArray(true);
+
+        writer.beginObject();
+
+        writer.field("a", 0);
+        writer.field("b", "c");
+        writer.field("d", false);
+        writer.field("e", true);
+        writer.field("f", new BigDecimal("123456789E-50"));
+        writer.nullField("g");
+
+        writer.key("object").beginObject();
+        writer.field("a", "\u0042\n");
+        writer.field("0", 0);
+        writer.endObject();
+
+        writer.key("array");
+        writer.beginArray();
+        writer.value("a");
+        writer.value("b");
+        writer.value("c");
+        writer.beginArray();
+        writer.value("d");
+        writer.value("e");
+        writer.value("f");
+
+        writer.beginObject();
+        writer.field("hello", "world");
+        writer.field("world", "hello");
+        writer.field("lorem", "ipsum");
+        writer.field("42", 42);
+        writer.endObject();
+
+        writer.endArray();
+        writer.endArray();
+
+        writer.field("hello", "world");
+
+        writer.endObject();
+
+        writer.close();
+    }
 }
