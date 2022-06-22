@@ -3,10 +3,8 @@ package fr.poulpogaz.json;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.Reader;
+import java.io.StringReader;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,17 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for the {@link JsonReader} class
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.2.1
  */
 public class JsonReadTest {
 
-    private Reader getReader() throws IOException {
-        return Files.newBufferedReader(Path.of("src/test/java/resources/read_test.json"));
-    }
-
     @Test
     void read() throws IOException, JsonException {
-        IJsonReader reader = new JsonReader(getReader());
+        IJsonReader reader = new JsonReader(new StringReader(TestUtils.JSON));
 
         reader.beginObject();
 

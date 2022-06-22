@@ -1,10 +1,14 @@
 package fr.poulpogaz.json;
 
-import fr.poulpogaz.json.tree.*;
+import fr.poulpogaz.json.tree.JsonArray;
+import fr.poulpogaz.json.tree.JsonElement;
+import fr.poulpogaz.json.tree.JsonObject;
+import fr.poulpogaz.json.tree.JsonTreeReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for the {@link JsonTreeReader} class
  *
  * @author PoulpoGaz
- * @version 1.1
+ * @version 1.2.1
  */
 public class JsonTreeReaderTest {
 
@@ -25,7 +29,7 @@ public class JsonTreeReaderTest {
 
     @Test
     void read() throws IOException, JsonException {
-        JsonElement element = JsonTreeReader.read(getReader());
+        JsonElement element = JsonTreeReader.read(new StringReader(TestUtils.JSON));
 
         assertTrue(element instanceof JsonObject);
 

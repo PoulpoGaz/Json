@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * Test class for the {@link JsonPrettyWriter} class

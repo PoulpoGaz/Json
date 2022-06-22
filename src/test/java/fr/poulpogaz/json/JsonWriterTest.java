@@ -1,23 +1,27 @@
 package fr.poulpogaz.json;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * Test class for the {@link JsonWriter} class
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.2.1
  */
 class JsonWriterTest {
 
     @Test
     void write() throws IOException, JsonException {
-        IJsonWriter writer = new JsonWriter(Files.newBufferedWriter(Path.of("src/test/json_writer_test.json")));
+        String expected = """
+                {"a":0,"b":"c","d":false,"e":true,"f":1.23456789E-42,"g":null,"object":{"a":"B\\n","0":0},"array":["a","b","c",["d","e","f"]]}""";
+
+        StringWriter sw = new StringWriter();
+        IJsonWriter writer = new JsonWriter(sw);
 
         writer.beginObject();
 
@@ -48,5 +52,6 @@ class JsonWriterTest {
         writer.endObject();
 
         writer.close();
+        Assertions.assertEquals(expected, sw.toString());
     }
 }

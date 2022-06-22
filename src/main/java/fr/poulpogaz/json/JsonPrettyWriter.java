@@ -1,6 +1,5 @@
 package fr.poulpogaz.json;
 
-import fr.poulpogaz.json.scope.JsonReadScope;
 import fr.poulpogaz.json.scope.JsonWriteScope;
 
 import java.io.IOException;

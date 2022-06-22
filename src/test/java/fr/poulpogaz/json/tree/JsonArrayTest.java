@@ -2,7 +2,8 @@ package fr.poulpogaz.json.tree;
 
 import org.junit.jupiter.api.Test;
 
-import static fr.poulpogaz.json.TestUtils.*;
+import static fr.poulpogaz.json.TestUtils.BIG_INT;
+import static fr.poulpogaz.json.TestUtils.createArray;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

@@ -5,28 +5,25 @@ import fr.poulpogaz.json.tree.JsonObject;
 import fr.poulpogaz.json.tree.JsonTreeWriter;
 import fr.poulpogaz.json.tree.JsonValue;
 import fr.poulpogaz.json.tree.value.JsonString;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * Test class for the {@link JsonTreeWriter} class
  *
  * @author PoulpoGaz
- * @version 1.1
+ * @version 1.2.1
  */
 public class JsonTreeWriterTest {
 
     private JsonArray createArray() {
         JsonArray array = new JsonArray();
-
-        for (int i = 0; i < 30; i++) {
-            array.add(i);
-        }
+        array.addNull();
+        array.add("hello");
 
         JsonObject inner = new JsonObject();
 
@@ -66,31 +63,40 @@ public class JsonTreeWriterTest {
 
     @Test
     void writeObject() throws IOException, JsonException {
+        String expected = """
+                {"number":1E+100,"array":[null,"hello",{"1":2,"null":null,"true":false,"hello":"world"}],"hello world":["h","e","l","l","o"," ","w","o","r","l","d"]}""";
+
         JsonObject object = createObject();
         object.put("array", createArray());
 
-        Path path = Path.of("src/test/json_tree_writer_test_object.json");
-        BufferedWriter bw = Files.newBufferedWriter(path);
-        JsonTreeWriter.write(object, new JsonPrettyWriter(bw));
+        StringWriter sw = new StringWriter();
+        JsonTreeWriter.write(object, new JsonWriter(sw));
+
+        Assertions.assertEquals(expected, sw.toString());
     }
 
     @Test
     void writeArray() throws IOException, JsonException {
+        String expected = """
+                [null,"hello",{"1":2,"null":null,"true":false,"hello":"world"},{"number":1E+100,"hello world":["h","e","l","l","o"," ","w","o","r","l","d"]},[null,"hello",{"1":2,"null":null,"true":false,"hello":"world"}]]""";
+        
         JsonArray array = createArray();
         array.add(createObject());
         array.add(createArray());
 
-        Path path = Path.of("src/test/json_tree_writer_test_array.json");
-        BufferedWriter bw = Files.newBufferedWriter(path);
-        JsonTreeWriter.write(array, new JsonPrettyWriter(bw));
+        StringWriter sw = new StringWriter();
+        JsonTreeWriter.write(array, new JsonWriter(sw));
+
+        Assertions.assertEquals(expected, sw.toString());
     }
 
     @Test
     void writeValue() throws IOException, JsonException {
         JsonValue value = new JsonString("hello world");
 
-        Path path = Path.of("src/test/json_tree_writer_test_value.json");
-        BufferedWriter bw = Files.newBufferedWriter(path);
-        JsonTreeWriter.write(value, new JsonPrettyWriter(bw));
+        StringWriter sw = new StringWriter();
+        JsonTreeWriter.write(value, new JsonWriter(sw));
+
+        Assertions.assertEquals("\"hello world\"", sw.toString());
     }
 }

@@ -9,6 +9,42 @@ import java.math.RoundingMode;
 
 public class TestUtils {
 
+    public static final String JSON = """
+            {
+                "a": "b",
+                "c": "\\u0064",
+                "e": 0e50,
+                "f": 46.43e-40,
+                "g": 50,
+                "h": null,
+                "i": [
+                    [
+                        "a",
+                        "b",
+                        "c"
+                    ],
+                    [
+                        "d",
+                        "e",
+                        "f"
+                    ],
+                    {
+                        "g": true,
+                        "h": false,
+                        "i": null,
+                        "j": {
+                        
+                        },
+                        "k": [
+                        
+                        ]
+                    }
+                ]
+            }
+            """;
+
+
+
     public static final String FIBO_1000 =
             "43466556346569743917588837500855236222358804893410139879820906920710924291203196338966832627312640434634845291242138802169508131353889095639306046460960325840504142685216489899260193254960875204883719871528960";
     public static final BigInteger BIG_INT = new BigInteger(FIBO_1000);
