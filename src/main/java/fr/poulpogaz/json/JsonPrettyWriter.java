@@ -56,6 +56,9 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     /** When true, a line separator won't be added after a value in an array **/
     private Inline inline;
 
+    /** When true, re indent when changing inline to NONE */
+    private boolean autoReIndent = true;
+
     /** cache value **/
     private String space;
 
@@ -300,7 +303,10 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         }
     }
 
-    protected void calculateDepth() {
+    /**
+     * Recalculate indent depending on the current inline strategy
+     */
+    public void reIndent() {
         depth = 0;
         JsonWriteScope scope = this.scope;
 
@@ -382,15 +388,38 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         }
     }
 
+    /**
+     * @return current inline strategy
+     */
     public Inline getInline() {
         return inline;
     }
 
+    /**
+     * @param inline new inline strategy
+     */
     public void setInline(Inline inline) {
         if (this.inline != inline) {
             this.inline = inline;
 
-            calculateDepth();
+            if (autoReIndent && inline == Inline.NONE) {
+                reIndent();
+            }
         }
+    }
+
+    /**
+     * @return true if the writer auto indent after changing inline strategy to NONE
+     */
+    public boolean isAutoReIndenting() {
+        return autoReIndent;
+    }
+
+    /**
+     * @param autoReIndent true to automatically re-indent when
+     *                     changing inline strategy to NONE
+     */
+    public void setAutoReIndent(boolean autoReIndent) {
+        this.autoReIndent = autoReIndent;
     }
 }

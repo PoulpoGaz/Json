@@ -293,6 +293,13 @@ public class JsonPrettyWriterTest {
 
     @Test
     void enableAndDisableInline3() throws JsonException, IOException {
+        String expected = """
+                {"key": {"key2": {"key3": {
+                                "hello": "world"
+                            }
+                        }
+                    }
+                }""";
 
         StringWriter sw = new StringWriter();
         JsonPrettyWriter jpw = new JsonPrettyWriter(sw);
@@ -310,8 +317,6 @@ public class JsonPrettyWriterTest {
 
         jpw.close();
 
-        System.out.println(sw.toString());
-
-        //Assertions.assertEquals(expected, sw.toString());
+        Assertions.assertEquals(expected, sw.toString());
     }
 }
