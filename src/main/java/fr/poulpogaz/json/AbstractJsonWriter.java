@@ -148,6 +148,32 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     }
 
     /**
+     * Writes the specified {@code byte} value
+     *
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter value(byte value) throws IOException, JsonException {
+        return value(Byte.toString(value), false);
+    }
+
+    /**
+     * Writes the specified {@code short} value
+     *
+     * @param value the short to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter value(short value) throws IOException, JsonException {
+        return value(Short.toString(value), false);
+    }
+
+    /**
      * Writes the specified {@code int} value
      *
      * @param value the int to write
@@ -161,6 +187,19 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     }
 
     /**
+     * Writes the specified {@code long} value
+     *
+     * @param value the long to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter value(long value) throws IOException, JsonException {
+        return value(Long.toString(value), false);
+    }
+
+    /**
      * Writes the specified {@code float} value
      *
      * @param value the float to write
@@ -171,6 +210,19 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     @Override
     public IJsonWriter value(float value) throws IOException, JsonException {
         return value(Float.toString(value), false);
+    }
+
+    /**
+     * Writes the specified {@code double} value
+     *
+     * @param value the int to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter value(double value) throws IOException, JsonException {
+        return value(Double.toString(value), false);
     }
 
     /**
@@ -230,6 +282,36 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
 
     /**
      * Writes the specified {@link String} key and
+     * the specified {@code byte} value
+     *
+     * @param key   the key to write
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException   If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter field(String key, byte value) throws IOException, JsonException {
+        return field(key, Byte.toString(value), false);
+    }
+
+    /**
+     * Writes the specified {@link String} key and
+     * the specified {@code short} value
+     *
+     * @param key   the key to write
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException   If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter field(String key, short value) throws IOException, JsonException {
+        return field(key, Short.toString(value), false);
+    }
+
+    /**
+     * Writes the specified {@link String} key and
      * the specified {@code int} value
      *
      * @param key the key to write
@@ -242,6 +324,23 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     public IJsonWriter field(String key, int value) throws IOException, JsonException {
         return field(key, Integer.toString(value), false);
     }
+
+
+    /**
+     * Writes the specified {@link String} key and
+     * the specified {@code long} value
+     *
+     * @param key   the key to write
+     * @param value the long to write
+     * @return itself
+     * @throws IOException   If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter field(String key, long value) throws IOException, JsonException {
+        return field(key, Long.toString(value), false);
+    }
+
 
     /**
      * Writes the specified {@link String} key and
@@ -256,6 +355,21 @@ public abstract class AbstractJsonWriter implements IJsonWriter {
     @Override
     public IJsonWriter field(String key, float value) throws IOException, JsonException {
         return field(key, Float.toString(value), false);
+    }
+
+    /**
+     * Writes the specified {@link String} key and
+     * the specified {@code double} value
+     *
+     * @param key   the key to write
+     * @param value the double to write
+     * @return itself
+     * @throws IOException   If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    @Override
+    public IJsonWriter field(String key, double value) throws IOException, JsonException {
+        return field(key, Double.toString(value), false);
     }
 
     /**

@@ -77,6 +77,26 @@ public interface IJsonWriter {
     IJsonWriter value(boolean value) throws IOException, JsonException;
 
     /**
+     * Writes the specified {@code byte} value
+     *
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter value(byte value) throws IOException, JsonException;
+
+    /**
+     * Writes the specified {@code short} value
+     *
+     * @param value the short to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter value(short value) throws IOException, JsonException;
+
+    /**
      * Writes the specified {@code int} value
      *
      * @param value the int to write
@@ -87,6 +107,16 @@ public interface IJsonWriter {
     IJsonWriter value(int value) throws IOException, JsonException;
 
     /**
+     * Writes the specified {@code long} value
+     *
+     * @param value the long to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter value(long value) throws IOException, JsonException;
+
+    /**
      * Writes the specified {@code float} value
      *
      * @param value the float to write
@@ -95,6 +125,16 @@ public interface IJsonWriter {
      * @throws JsonException IF there is a syntax problem
      */
     IJsonWriter value(float value) throws IOException, JsonException;
+
+    /**
+     * Writes the specified {@code double} value
+     *
+     * @param value the int to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter value(double value) throws IOException, JsonException;
 
     /**
      * Writes the specified {@link Number} value
@@ -141,6 +181,31 @@ public interface IJsonWriter {
 
     /**
      * Writes the specified {@link String} key and
+     * the specified {@code byte} value
+     *
+     * @param key the key to write
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter field(String key, byte value) throws IOException, JsonException;
+
+    /**
+     * Writes the specified {@link String} key and
+     * the specified {@code short} value
+     *
+     * @param key the key to write
+     * @param value the byte to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter field(String key, short value) throws IOException, JsonException;
+
+
+    /**
+     * Writes the specified {@link String} key and
      * the specified {@code int} value
      *
      * @param key the key to write
@@ -153,6 +218,18 @@ public interface IJsonWriter {
 
     /**
      * Writes the specified {@link String} key and
+     * the specified {@code long} value
+     *
+     * @param key the key to write
+     * @param value the long to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter field(String key, long value) throws IOException, JsonException;
+
+    /**
+     * Writes the specified {@link String} key and
      * the specified {@code float} value
      *
      * @param key the key to write
@@ -162,6 +239,18 @@ public interface IJsonWriter {
      * @throws JsonException IF there is a syntax problem
      */
     IJsonWriter field(String key, float value) throws IOException, JsonException;
+
+    /**
+     * Writes the specified {@link String} key and
+     * the specified {@code double} value
+     *
+     * @param key the key to write
+     * @param value the double to write
+     * @return itself
+     * @throws IOException If an I/O error occurs
+     * @throws JsonException IF there is a syntax problem
+     */
+    IJsonWriter field(String key, double value) throws IOException, JsonException;
 
     /**
      * Writes the specified {@link String} key and

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -90,6 +91,35 @@ public class JsonPrettyWriterTest {
         writer.endArray();
 
         writer.field("hello", "world");
+
+        writer.endObject();
+
+        writer.close();
+    }
+
+    @Test
+    void numberTest() throws IOException, JsonException {
+        JsonPrettyWriter writer = new JsonPrettyWriter(Files.newBufferedWriter(Path.of("src/test/json_pretty_writer_test_number.json")));
+
+        writer.beginObject();
+        writer.field("byte", Byte.MAX_VALUE);
+        writer.field("short", Short.MAX_VALUE);
+        writer.field("int", Integer.MAX_VALUE);
+        writer.field("long", Long.MAX_VALUE);
+        writer.field("float", Float.MAX_VALUE);
+        writer.field("double", Double.MAX_VALUE);
+        writer.field("bigdec", new BigDecimal("1111111111111111111111111111111111111111111e-10000"));
+        writer.field("bigint", new BigInteger("1111111111111111111111111111111111111111111111111111111111111"));
+
+
+        writer.key("byte2").value(Byte.MAX_VALUE);
+        writer.key("short2").value(Short.MAX_VALUE);
+        writer.key("int2").value(Integer.MAX_VALUE);
+        writer.key("long2").value(Long.MAX_VALUE);
+        writer.key("float2").value(Float.MAX_VALUE);
+        writer.key("double2").value(Double.MAX_VALUE);
+        writer.key("bigdec2").value(new BigDecimal("1111111111111111111111111111111111111111111e-10000"));
+        writer.key("bigint2").value(new BigInteger("1111111111111111111111111111111111111111111111111111111111111"));
 
         writer.endObject();
 
