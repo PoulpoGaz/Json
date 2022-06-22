@@ -7,7 +7,7 @@ import fr.poulpogaz.json.JsonException;
  * reading a json stream
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.2.1
  */
 public abstract class JsonReadScope {
 
@@ -50,4 +50,8 @@ public abstract class JsonReadScope {
     public abstract void newComma() throws JsonException;
 
     public abstract void newColon() throws JsonException;
+
+    public JsonReadScope getParent() {
+        return parent;
+    }
 }

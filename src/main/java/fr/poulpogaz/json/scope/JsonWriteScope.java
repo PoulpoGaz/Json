@@ -7,7 +7,7 @@ import fr.poulpogaz.json.JsonException;
  * writing
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.2.1
  */
 public abstract class JsonWriteScope {
 
@@ -58,5 +58,9 @@ public abstract class JsonWriteScope {
 
     public boolean needComma() {
         return state == STATE_AFTER_VALUE;
+    }
+
+    public JsonWriteScope getParent() {
+        return parent;
     }
 }

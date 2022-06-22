@@ -1,5 +1,8 @@
 package fr.poulpogaz.json;
 
+import fr.poulpogaz.json.scope.JsonReadScope;
+import fr.poulpogaz.json.scope.JsonWriteScope;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -9,10 +12,33 @@ import java.io.Writer;
  * indentation, spaces, etc.
  *
  * @author PoulpoGaz
- * @version 1.0
+ * @version 1.2.1
  * @see JsonWriter
  */
 public class JsonPrettyWriter extends AbstractJsonWriter {
+
+    public enum Inline {
+        ALL(true, true),
+        ARRAY(true, false),
+        OBJECT(false, true),
+        NONE(false, false);
+
+        private final boolean inlineArray;
+        private final boolean inlineObject;
+
+        Inline(boolean inlineArray, boolean inlineObject) {
+            this.inlineArray = inlineArray;
+            this.inlineObject = inlineObject;
+        }
+
+        public boolean isInlineArray() {
+            return inlineArray;
+        }
+
+        public boolean isInlineObject() {
+            return inlineObject;
+        }
+    }
 
     private int depth = 0;
 
@@ -29,7 +55,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     private boolean useWindowsLineSeparator;
 
     /** When true, a line separator won't be added after a value in an array **/
-    private boolean inlineArray;
+    private Inline inline;
 
     /** cache value **/
     private String space;
@@ -58,6 +84,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
 
         setUseTabs(false);
         setUseWindowsLineSeparator(true);
+        setInline(Inline.NONE);
     }
 
     /**
@@ -73,12 +100,20 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         boolean wasArray = scope.isArray();
         scope = scope.createObjectScope();
 
-        if (comma || wasArray) {
-            newLine();
+        if (inline.isInlineObject()) {
+
+            if (comma || wasArray) {
+                out.write(' ');
+            }
+
+        } else {
+            if (comma || wasArray) {
+                newLine();
+            }
+            depth++;
         }
 
         out.write('{');
-        depth++;
 
         return this;
     }
@@ -93,8 +128,12 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter endObject() throws IOException, JsonException {
         scope = scope.close();
-        depth--;
-        newLine();
+
+        if (!inline.isInlineObject()) {
+            depth--;
+            newLine();
+        }
+
         out.write('}');
 
         return this;
@@ -113,18 +152,20 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         boolean wasArray = scope.isArray();
         scope = scope.createArrayScope();
 
-        if (inlineArray) {
+        if (inline.isInlineArray()) {
 
             if (comma || wasArray) {
                 out.write(' ');
             }
 
-        } else if (comma || wasArray) {
-            newLine();
+        } else {
+            if (comma || wasArray) {
+                newLine();
+            }
+            depth++;
         }
 
         out.write("[");
-        depth++;
 
         return this;
     }
@@ -139,9 +180,9 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
     @Override
     public IJsonWriter endArray() throws IOException, JsonException {
         scope = scope.close();
-        depth--;
 
-        if (!inlineArray) {
+        if (!inline.isInlineArray()) {
+            depth--;
             newLine();
         }
 
@@ -160,9 +201,19 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
      */
     @Override
     public IJsonWriter key(String key) throws IOException, JsonException {
-        writeCommaIfNeeded();
+        boolean comma = writeCommaIfNeeded();
         scope.newKey();
-        newLine();
+
+        if (scope.isObject()) {
+            if (inline.isInlineObject()) {
+                if (comma) {
+                    out.write(' ');
+                }
+            } else {
+                newLine();
+            }
+        }
+
         writeString(key);
         out.write(": ");
 
@@ -185,7 +236,7 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         scope.newValue();
 
         if (scope.isArray()) {
-            if (inlineArray) {
+            if (inline.isInlineArray()) {
                 if (comma) {
                     out.write(' ');
                 }
@@ -215,17 +266,8 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
      */
     @Override
     protected IJsonWriter field(String key, String value, boolean wrap) throws IOException, JsonException {
-        writeCommaIfNeeded();
-        newLine();
-        scope.newField();
-        writeString(key);
-        out.write(": ");
-
-        if (wrap) {
-            writeString(value);
-        } else {
-            out.write(value);
-        }
+        key(key);
+        value(value, wrap);
 
         return this;
     }
@@ -256,6 +298,22 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
             out.write(": ");
         } else {
             out.write(':');
+        }
+    }
+
+    protected void calculateDepth() {
+        depth = 0;
+        JsonWriteScope scope = this.scope;
+
+        while (scope.getParent() != null) {
+
+            if (scope.isArray() && !inline.isInlineArray()) {
+                depth++;
+            } else if (scope.isObject() && !inline.isInlineObject()) {
+                depth++;
+            }
+
+            scope = scope.getParent();
         }
     }
 
@@ -325,19 +383,15 @@ public class JsonPrettyWriter extends AbstractJsonWriter {
         }
     }
 
-    /**
-     * @return {@code true} if the writer inline arrays
-     */
-    public boolean isInlineArray() {
-        return inlineArray;
+    public Inline getInline() {
+        return inline;
     }
 
-    /**
-     * Combining inline arrays and objects may produce
-     * weird result
-     * @param inlineArray true for inline arrays
-     */
-    public void setInlineArray(boolean inlineArray) {
-        this.inlineArray = inlineArray;
+    public void setInline(Inline inline) {
+        if (this.inline != inline) {
+            this.inline = inline;
+
+            calculateDepth();
+        }
     }
 }
