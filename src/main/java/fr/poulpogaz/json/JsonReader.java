@@ -1,6 +1,5 @@
 package fr.poulpogaz.json;
 
-import com.sun.jdi.InternalException;
 import fr.poulpogaz.json.number.NumberHelper;
 
 import java.io.IOException;
@@ -520,7 +519,7 @@ public class JsonReader extends AbstractJsonReader {
         } else if (number instanceof Integer) {
             return JsonToken.INT_TOKEN;
         }  else {
-            throw new InternalException("Unknown number: " + number + " (" + number.getClass() + ")");
+            throw new IllegalStateException("Unknown number: " + number + " (" + number.getClass() + ")");
         }
     }
 
